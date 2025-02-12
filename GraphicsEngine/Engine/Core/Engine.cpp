@@ -70,8 +70,19 @@ namespace GE
 		// 기본 메시지 처리
 		return DefWindowProc(handle, message, wparam, lparam);
 	}
+
 	Engine& Engine::Get()
 	{
 		return *instance;
+	}
+
+	ID3D11Device& Engine::Device() const
+	{
+		return *renderer->device;
+	}
+
+	ID3D11DeviceContext& Engine::Context() const
+	{
+		return *renderer->context;
 	}
 }

@@ -1,8 +1,7 @@
-#include <Windows.h>
-
-#include "Core/Window.h"
-#include "Render/Renderer.h"
 #include "Core//Engine.h"
+#include <iostream>
+
+#include "Math/Vector2.h"
 
 // 메시지 : GUI에서 사용하는 이벤트 처리 방식
 // 창에 관련된 메시지(이벤트)를 처리하는 콜백 함수.
@@ -31,6 +30,8 @@ LRESULT CALLBACK WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lpa
 
 using namespace GE;
 
+/*
+// 창 모드 할때 메시지 처리
 int WINAPI WinMain(
     // 옵션 처리하는 값임 _IN_ 이런거
     // Handle Instance : 구조체임 
@@ -48,4 +49,13 @@ int WINAPI WinMain(
 
     engine.Run();
     return 0;
+}
+*/
+
+int main()
+{
+    // 엔진 생성 및 실행
+    Engine engine(1280, 800, TEXT("ENGINE DEMO"), GetModuleHandle(nullptr));
+    engine.Run();
+
 }
