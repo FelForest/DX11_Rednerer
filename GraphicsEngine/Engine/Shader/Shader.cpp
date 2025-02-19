@@ -10,28 +10,38 @@ namespace GE
 
 		// 경로 추가
 		wchar_t path[256];
-		swprintf_s(path, 256, L"HLSLShader/%sVertexShader.hlsl", name.c_str());
-		// 쉐이더 컴파일
-		auto result = D3DCompileFromFile(
-			path,
-			nullptr, 
-			/*쉐이더 안에 다른 파일 포함시키는거 설정값 */nullptr, 
-			"main", 
-			"vs_5_0", 
-			0, 
-			0, 
-			&vertexShaderBuffer, 
-			nullptr
-		);
+		swprintf_s(path, 256, L"../CompiledShader/%sVertexShader.cso", name.c_str());
+
+		//  버텍스 쉐이더 컴파일
+		//auto result = D3DCompileFromFile(
+		//	path,
+		//	nullptr, 
+		//	/*쉐이더 안에 다른 파일 포함시키는거 설정값 */nullptr, 
+		//	"main", 
+		//	"vs_5_0", 
+		//	0, 
+		//	0, 
+		//	&vertexShaderBuffer, 
+		//	nullptr
+		//);
+		//if (FAILED(result))
+		//{
+		//	MessageBox(nullptr, TEXT("Failed to compile vertex shader. "), TEXT("Error"), MB_OK);
+		//	__debugbreak();
+		//}
+
+		// 장치 객체 얻어오기
+		auto& device = Engine::Get().Device();
+
+		// 버텍스 CSO 로드
+		auto result = D3DReadFileToBlob(path, &vertexShaderBuffer);
 		if (FAILED(result))
 		{
-			MessageBox(nullptr, TEXT("Failed to compile vertex shader. "), TEXT("Error"), MB_OK);
+			MessageBox(nullptr, TEXT("Failed to read vertex shader object. "), TEXT("Error"), MB_OK);
 			__debugbreak();
 		}
 
-		auto& device = Engine::Get().Device();
-
-		// 쉐이더 생성
+		// 버텍스 쉐이더 생성
 		result = device.CreateVertexShader(
 			vertexShaderBuffer->GetBufferPointer(), 
 			vertexShaderBuffer->GetBufferSize(), 
@@ -71,10 +81,21 @@ namespace GE
 				0,
 				DXGI_FORMAT_R32G32B32_FLOAT,
 				0,
-				D3D11_APPEND_ALIGNED_ELEMENT,
+				D3D11_APPEND_ALIGNED_ELEMENT /*12*/,
+				D3D11_INPUT_PER_VERTEX_DATA,
+				0
+			},
+			{
+				"TEXCOORD",
+				0,
+				DXGI_FORMAT_R32G32_FLOAT,
+				0,
+				D3D11_APPEND_ALIGNED_ELEMENT /*24*/,
 				D3D11_INPUT_PER_VERTEX_DATA,
 				0
 			}
+
+
 		};
 		// DX에 리플렉션 하는게 있음
 		result = device.CreateInputLayout(
@@ -93,26 +114,35 @@ namespace GE
 		// 픽셀 쉐이더 컴파일/생성
 		// 각 리소스 바인딩.
 
-		swprintf_s(path, 256, L"HLSLShader/%sPixelShader.hlsl", name.c_str());
-		// 쉐이더 컴파일
-		ID3DBlob* pixelShaderBuffer = nullptr;
-		result = D3DCompileFromFile(path, 
-			nullptr, 
-			/*쉐이더 안에 다른 파일 포함시키는거 설정값 */nullptr, 
-			"main", 
-			"ps_5_0", 
-			0, 
-			0, 
-			&pixelShaderBuffer, 
-			nullptr
-		);
+		// 픽셀 CSO 로드
+		swprintf_s(path, 256, L"../CompiledShader/%sPixelShader.cso", name.c_str());
+
+		result = D3DReadFileToBlob(path, &pixelShaderBuffer);
+
 		if (FAILED(result))
 		{
-			MessageBox(nullptr, TEXT("Failed to compile pixel shader. "), TEXT("Error"), MB_OK);
+			MessageBox(nullptr, TEXT("Failed to read pixel shader object. "), TEXT("Error"), MB_OK);
 			__debugbreak();
 		}
+		// 픽셀 쉐이더 컴파일
+		//ID3DBlob* pixelShaderBuffer = nullptr;
+		//result = D3DCompileFromFile(path, 
+		//	nullptr, 
+		//	/*쉐이더 안에 다른 파일 포함시키는거 설정값 */nullptr, 
+		//	"main", 
+		//	"ps_5_0", 
+		//	0, 
+		//	0, 
+		//	&pixelShaderBuffer, 
+		//	nullptr
+		//);
+		//if (FAILED(result))
+		//{
+		//	MessageBox(nullptr, TEXT("Failed to compile pixel shader. "), TEXT("Error"), MB_OK);
+		//	__debugbreak();
+		//}
 
-		// 쉐이더 생성
+		// 버텍스 쉐이더 생성
 		result = device.CreatePixelShader(
 			pixelShaderBuffer->GetBufferPointer(), 
 			pixelShaderBuffer->GetBufferSize(), 

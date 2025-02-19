@@ -146,7 +146,7 @@ namespace GE
 		}
 		// 그리기 전 작업 (BeginScene)
 		// 지우기(Clear)
-		float color[] = { 0.5647f, 0.6196f, 0.9529f };
+		float color[] = { 0.5647f, 0.6196f, 0.9529f, 0.0f };
 		context->ClearRenderTargetView(renderTargetView, color);
 		
 

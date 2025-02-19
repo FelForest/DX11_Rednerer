@@ -52,8 +52,11 @@ int WINAPI WinMain(
 }
 */
 
+#include "Render/Texture.h"
+
 int main()
 {
+    //Texture texture("T_coord.png");
     // 엔진 생성 및 실행
     Engine engine(1280, 800, TEXT("ENGINE DEMO"), GetModuleHandle(nullptr));
     engine.Run();

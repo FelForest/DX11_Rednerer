@@ -2,6 +2,7 @@
 // 이게 머터리얼임
 #include <string>
 #include <d3d11.h>
+
 namespace GE
 {
 	//RHI
@@ -19,7 +20,7 @@ namespace GE
 		virtual ~Shader();
 
 		// GPU에 쉐이더 객체를 연결(바인딩) 하는 함수
-		void Bind();
+		virtual void Bind();
 	protected:
 		// 쉐이더 파일 이름
 		std::wstring name;
