@@ -3,11 +3,11 @@
 namespace GE
 {
     TextureMappingShader::TextureMappingShader()
-        : Shader(L"Default")
+        : Shader(L"TextureMapping")
     {
     }
     TextureMappingShader::TextureMappingShader(const std::string& textureName) 
-        : Shader(L"Default")
+        : Shader(L"TextureMapping")
     {
         texture = std::make_unique<Texture>(textureName);
     }

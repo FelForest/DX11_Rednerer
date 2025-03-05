@@ -156,4 +156,5 @@ namespace GE
 		// 버퍼 교환 (EndScene/Present)
 		swapChain->Present(1u, 0u);
 	}
+	
 }
