@@ -67,12 +67,12 @@ void TestClass()
 }
 int main()
 {
-    TestClass<Engine>();
+    //TestClass<Engine>();
     //ThrowIfFailed(E_FAIL, TEXT("Text Error"))
     //Texture texture("T_coord.png");
     // 엔진 생성 및 실행
-    /*Engine engine(1280, 800, TEXT("ENGINE DEMO"), GetModuleHandle(nullptr));
-    engine.Run();*/
+    Engine engine(1280, 800, TEXT("ENGINE DEMO"), GetModuleHandle(nullptr));
+    engine.Run();
 
-    std::cin.get();
+    //std::cin.get();
 }

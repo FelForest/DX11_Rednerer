@@ -84,7 +84,8 @@ namespace GE
 		for (int ix = 0; ix < (int32)meshes.size(); ++ix)
 		{
 			meshes[ix]->Bind();
-			shaders[ix]->Bind();
+			// 원래는 nullptr 처리해줘야함
+			shaders[ix].lock()->Bind();
 			context.DrawIndexed(meshes[ix]->IndexCount(), 0, 0);
 		}
 	}

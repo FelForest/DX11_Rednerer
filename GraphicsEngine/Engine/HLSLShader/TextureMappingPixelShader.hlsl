@@ -15,10 +15,8 @@ float4 main(PixelInput input) : SV_TARGET
     float4 texColor = diffuseMap.Sample(diffuseSampler, input.texCoord);
     float4 inputColor = float4(input.color, 1);
     
-    texColor = (1 - texColor);
-    float4 finalColor = texColor * inputColor;
-    
-    finalColor = (1 - finalColor);
+    //texColor = (1 - texColor);
+    float4 finalColor = texColor;
     
     
 	//return float4(1.0f, 0.0f, 0.0f, 1.0f);
