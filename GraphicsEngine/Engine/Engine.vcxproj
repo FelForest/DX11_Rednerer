@@ -23,6 +23,7 @@
     <ClCompile Include="Render\TriangleMesh.cpp" />
     <ClCompile Include="Resource\ShaderLoader.cpp" />
     <ClCompile Include="Resource\TextureLoader.cpp" />
+    <ClCompile Include="Shader\DefaultShader.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Shader\TextureMappingShader.cpp" />
   </ItemGroup>
@@ -42,6 +43,7 @@
     <ClInclude Include="Render\Vertex.h" />
     <ClInclude Include="Resource\ShaderLoader.h" />
     <ClInclude Include="Resource\TextureLoader.h" />
+    <ClInclude Include="Shader\DefaultShader.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\TextureMappingShader.h" />
   </ItemGroup>

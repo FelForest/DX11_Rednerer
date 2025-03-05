@@ -53,7 +53,7 @@ namespace GE
 
 		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		// 백버퍼 개수
-		swapChainDesc.BufferCount = 1;									
+		swapChainDesc.BufferCount = 2;									
 
 		// 에일리어싱 / 앨리어싱
 		// 멀티 샘플링 갯수
@@ -67,7 +67,7 @@ namespace GE
 		swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
 		// 버퍼 스왑 방법
-		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 
 
 		// 장치 생성
@@ -144,7 +144,11 @@ namespace GE
 			// 쉐이더 객체 생성
 			Qmesh = std::make_unique<QuardMesh>();
 		}
+
 		// 그리기 전 작업 (BeginScene)
+		// 매번 타겟팅 해줘야함, 하지면 여기는 안바꿈
+		context->OMSetRenderTargets(1, &renderTargetView, nullptr);
+		
 		// 지우기(Clear)
 		float color[] = { 0.5647f, 0.6196f, 0.9529f, 0.0f };
 		context->ClearRenderTargetView(renderTargetView, color);
