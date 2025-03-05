@@ -6,7 +6,7 @@
 #include "../Shader/Shader.h"
 #include "TriangleMesh.h"
 #include "QuardMesh.h"
-
+#include "Core/Common.h"
 
 namespace GE
 {
@@ -76,34 +76,34 @@ namespace GE
 
 		
 		// 3개만 생성
-		HRESULT result = D3D11CreateDeviceAndSwapChain(
-			nullptr, 
-			D3D_DRIVER_TYPE_HARDWARE, 
-			nullptr, 
-			flag, 
-			featureLevels, 
-			_countof(featureLevels), 
-			D3D11_SDK_VERSION, 
-			&swapChainDesc, /*윈도우에 통합 되고 나서 메크로로 된거*/ 
-			&swapChain, 
-			&device, 
+		ThrowIfFailed(D3D11CreateDeviceAndSwapChain(
+			nullptr,
+			D3D_DRIVER_TYPE_HARDWARE,
+			nullptr,
+			flag,
+			featureLevels,
+			_countof(featureLevels),
+			D3D11_SDK_VERSION,
+			&swapChainDesc, /*윈도우에 통합 되고 나서 메크로로 된거*/
+			&swapChain,
+			&device,
 			nullptr,
 			&context
-		);
+		), TEXT("Failed to create device"));
 
-		if (FAILED(result))
+		/*if (FAILED(result))
 		{
 			MessageBox(nullptr, TEXT("Failed to create devices. "), TEXT("Error"), MB_OK);
 			__debugbreak();
 			
-		}
+		}*/
 
 		// 랜더 타겟 뷰 생성.
 		ID3D11Texture2D* backbuffer = nullptr;
 
 		// 버퍼 받아오기
 		//swapChain->GetBuffer(0, __uuidof(backbuffer), reinterpret_cast<void**>(&backbuffer));
-		result = swapChain->GetBuffer(0, IID_PPV_ARGS(&backbuffer));
+		auto result = swapChain->GetBuffer(0, IID_PPV_ARGS(&backbuffer));
 		if (FAILED(result))
 		{
 			MessageBox(nullptr, TEXT("Failed to get back buffer. "), TEXT("Error"), MB_OK);

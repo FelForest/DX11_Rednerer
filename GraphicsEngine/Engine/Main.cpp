@@ -1,4 +1,4 @@
-#include "Core//Engine.h"
+#include "Core/Engine.h"
 #include <iostream>
 
 #include "Math/Vector2.h"
@@ -53,9 +53,10 @@ int WINAPI WinMain(
 */
 
 #include "Render/Texture.h"
-
+#include "Core/Common.h"
 int main()
 {
+    //ThrowIfFailed(E_FAIL, TEXT("Text Error"))
     //Texture texture("T_coord.png");
     // 엔진 생성 및 실행
     Engine engine(1280, 800, TEXT("ENGINE DEMO"), GetModuleHandle(nullptr));
