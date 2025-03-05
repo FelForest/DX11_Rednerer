@@ -153,6 +153,8 @@ namespace GE
 		float color[] = { 0.5647f, 0.6196f, 0.9529f, 0.0f };
 		context->ClearRenderTargetView(renderTargetView, color);
 		
+		// Test
+		Qmesh->Update(1.0f / 60.0f);
 
 		// µå·Î¿ì(Draw) (Draw)
 		Qmesh->Draw();

@@ -15,12 +15,32 @@ namespace GE
 		// 메모리 너비(단위 : 바이트).
 		static uint32 Stride() { return sizeof(Matrix4); }
 
-		static Matrix4 Rotation(const Vector3& rotation);
-		static Matrix4 Rotation(float);
+		// 이동 변환 행렬(T)
+		static Matrix4 Translation(const Vector3& position);
+		static Matrix4 Translation(float x, float y, float z);
 
+		// 회전 변환 행렬(R)
+		static Matrix4 Rotation(const Vector3& rotation);
+		static Matrix4 Rotation(float x, float y, float z);
 		static Matrix4 RotationX(float angle);
 		static Matrix4 RotationY(float angle);
 		static Matrix4 RotationZ(float angle);
+
+		// 크기 변환 행렬(S)
+		static Matrix4 Scale(const Vector3& scale);
+		static Matrix4 Scale(float x, float y, float z);
+		static Matrix4 Scale(float scale);
+
+		// 전치 행렬
+		static Matrix4 Transpose(const Matrix4& target);
+
+		// operator overloading
+		Matrix4& operator=(const Matrix4& other);
+		Matrix4 operator*(const Matrix4& other);
+		Matrix4 operator*=(const Matrix4& other);
+
+		friend Vector3 operator*(const Matrix4& matrix, const Vector3& vector);
+		friend Vector3 operator*(const Vector3& vector, const Matrix4& matrix);
 
 		// Degree <-> Radian
 		// 원래는 const는 선언만 하고 실제로는 cpp에서 해야함

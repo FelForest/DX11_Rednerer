@@ -5,6 +5,11 @@ struct VertexInput
     float2 texCoord /*uv*/ : TEXCOORD;
 };
 
+cbuffer Transform : register(b0)
+{
+    matrix worldMatrix;
+};
+
 struct VertexOutput
 {
     float4 position : SV_Position;
@@ -15,7 +20,8 @@ struct VertexOutput
 VertexOutput main(VertexInput input)
 {
     VertexOutput ouput;
-    ouput.position = float4(input.position, 1);
+    //ouput.position = float4(input.position, 1);
+    ouput.position = mul(float4(input.position, 1), worldMatrix);
     ouput.color = input.color;
     ouput.texCoord = input.texCoord;
     

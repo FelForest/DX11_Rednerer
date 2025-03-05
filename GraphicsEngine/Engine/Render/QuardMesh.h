@@ -7,5 +7,10 @@ namespace GE
 	{
 	public:
 		QuardMesh();
+
+		void Update(float deltaTime);
+
+	private:
+		void Rotate(float angle);
 	};
 }

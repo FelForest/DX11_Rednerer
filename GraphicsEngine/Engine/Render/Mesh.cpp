@@ -72,6 +72,36 @@ namespace GE
 		context.IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 		context.IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	}
+	void MeshData::UpdateVertexBuffer(const std::vector<Vertex>& vertices)
+	{
+		// 파라미터 복사
+		this->vertices.assign(vertices.begin(), vertices.end());
+
+		// 정점 버퍼가 있으면, 해제 후 재생성
+		if (vertexBuffer)
+		{
+			vertexBuffer->Release();
+			vertexBuffer = nullptr;
+		}
+		// @Temp : 임시 리소스 생성
+		// 버퍼(Buffer) - 메모리 덩어리
+		D3D11_BUFFER_DESC vertexBufferDesc = { };
+		vertexBufferDesc.ByteWidth = stride * (uint32)vertices.size();
+		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+
+		D3D11_SUBRESOURCE_DATA vertexData = { };
+		vertexData.pSysMem = vertices.data();
+
+		ID3D11Device& device = Engine::Get().Device();
+		// (정점) 버퍼 생성
+		auto result = device.CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer);
+
+		if (FAILED(result))
+		{
+			MessageBox(nullptr, TEXT("Failed to create vertex buffer. "), TEXT("Error"), MB_OK);
+			__debugbreak();
+		}
+	}
 	Mesh::Mesh()
 	{
 	}
