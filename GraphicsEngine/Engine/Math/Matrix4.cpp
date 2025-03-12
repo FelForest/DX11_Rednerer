@@ -183,6 +183,11 @@ namespace GE
 	{
 		Vector3 result;
 
+		// 이건 위치값도 넣는 방식임
+		/*result.x = vector.x * matrix.m00 + vector.y * matrix.m10 + vector.z * matrix.m20 + 1.0f * matrix.m30;
+		result.y = vector.x * matrix.m01 + vector.y * matrix.m11 + vector.z * matrix.m21 + 1.0f * matrix.m31;
+		result.z = vector.x * matrix.m02 + vector.y * matrix.m12 + vector.z * matrix.m22 + 1.0f * matrix.m32;*/
+
 		result.x = vector.x * matrix.m00 + vector.y * matrix.m10 + vector.z * matrix.m20;
 		result.y = vector.x * matrix.m01 + vector.y * matrix.m11 + vector.z * matrix.m21;
 		result.z = vector.x * matrix.m02 + vector.y * matrix.m12 + vector.z * matrix.m22;
