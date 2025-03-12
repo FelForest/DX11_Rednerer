@@ -6,6 +6,7 @@
 
 #include "Vertex.h"
 #include "../Core/Type.h"
+#include "Math/Transform.h"
 
 namespace GE
 {
@@ -43,9 +44,15 @@ namespace GE
 
         virtual void Draw();
 
+    public:
+        // 객체지향 생각하면 Get Set 만드는게 맞는데 지울건데 그때 합시다
+        // @Temp: 트랜스폼 정보(임시) : 엑터 만들어지면 넘어갈 값
+        Transform transform;
+
     protected:
         std::vector<std::shared_ptr<MeshData>> meshes;
         //std::vector<std::shared_ptr<class Shader>> shaders;
         std::vector<std::weak_ptr<class Shader>> shaders;
+
     };
 }

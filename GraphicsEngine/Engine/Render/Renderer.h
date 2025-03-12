@@ -49,8 +49,10 @@ namespace GE
 		// 인덱스 버퍼 (정점을 조립할 때 정점의 순서를 전달).
 		ID3D11Buffer* indexBuffer = nullptr;
 
+
 		std::unique_ptr<class TriangleMesh> Tmesh;
 		std::unique_ptr<class QuardMesh> Qmesh;
+		std::unique_ptr<class QuardMesh> Qmesh2;
 
 		// 쉐이더 객체.
 		std::unique_ptr<class Shader> shader;

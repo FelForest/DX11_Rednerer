@@ -110,6 +110,9 @@ namespace GE
 		// 컨텍스트 얻어오기
 		ID3D11DeviceContext& context = Engine::Get().Context();
 
+		// 트랜스폼 바인딩
+		transform.Bind();
+
 		// 루프 순회하면서 바인딩 & 드로우
 		for (int ix = 0; ix < (int32)meshes.size(); ++ix)
 		{
