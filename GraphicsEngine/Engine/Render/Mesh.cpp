@@ -116,10 +116,21 @@ namespace GE
 		// 루프 순회하면서 바인딩 & 드로우
 		for (int ix = 0; ix < (int32)meshes.size(); ++ix)
 		{
-			meshes[ix]->Bind();
-			// 원래는 nullptr 처리해줘야함
-			shaders[ix].lock()->Bind();
-			context.DrawIndexed(meshes[ix]->IndexCount(), 0, 0);
+			auto mesh = meshes[ix].lock();
+			auto shader = shaders[ix].lock();
+
+			if (mesh && shader)
+			{
+				mesh->Bind();
+				shader->Bind();
+				context.DrawIndexed(mesh->IndexCount(), 0, 0);
+			}
+
+
+			//meshes[ix]->Bind();
+			//// 원래는 nullptr 처리해줘야함
+			//shaders[ix].lock()->Bind();
+			//context.DrawIndexed(meshes[ix]->IndexCount(), 0, 0);
 		}
 	}
 }

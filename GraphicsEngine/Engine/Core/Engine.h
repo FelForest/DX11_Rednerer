@@ -42,6 +42,9 @@ namespace GE
 		// ÅØ½ºÃ³ ·Î´õ °´·¹
 		std::unique_ptr<class TextureLoader> textureLoader;
 
+		// ¸ðµ¨ ·Î´õ °´·¹
+		std::unique_ptr<class ModelLoader> modelLoader;
+
 		// ½Ì±ÛÅæ °´Ã¼
 		static Engine* instance;
 	};

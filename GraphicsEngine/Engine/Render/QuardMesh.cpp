@@ -2,6 +2,7 @@
 #include "../Shader/Shader.h"
 #include "Shader/TextureMappingShader.h"
 #include "Resource/ShaderLoader.h"
+#include "Resource//ModelLoader.h"
 
 #include "Math/Matrix4.h"
 #include "Math/Vector3.h"
@@ -34,8 +35,18 @@ namespace GE
         vertices[3].position = vertices[3].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);*/
 
 
-        meshes.emplace_back(std::make_shared<MeshData>(vertices, indices));
+
+        //meshes.emplace_back(std::make_shared<MeshData>(vertices, indices));
+        std::weak_ptr<MeshData> mesh;
+        if (ModelLoader::Get().Load("quad.obj", mesh))
+        {
+            meshes.emplace_back(mesh);
+        }
+        
         //shaders.emplace_back(std::make_shared<TextureMappingShader>("SuperMario.png"));
+
+
+
         std::weak_ptr<TextureMappingShader> shader;
         if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_coord.png"))
         {
@@ -84,7 +95,7 @@ namespace GE
         result[3].position = vertices[3].position * rotation;
 
         // 메시의 정점 버퍼 업데이트
-        meshes[0]->UpdateVertexBuffer(result);
+        meshes[0].lock()->UpdateVertexBuffer(result);
 
     }
 }

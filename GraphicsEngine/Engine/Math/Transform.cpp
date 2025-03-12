@@ -18,6 +18,8 @@ namespace GE
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = Matrix4::Stride();
 		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 		// 버퍼에 담을 데이터 설정
 		D3D11_SUBRESOURCE_DATA bufferDate = {};
@@ -55,7 +57,15 @@ namespace GE
 		transformMatrix = Matrix4::Transpose(transformMatrix);
 
 		// 버퍼 업데이트
-		context.UpdateSubresource(constantBuffer, 0, nullptr, &transformMatrix, 0, 0);
+		//context.UpdateSubresource(constantBuffer, 0, nullptr, &transformMatrix, 0, 0);
+		D3D11_MAPPED_SUBRESOURCE resource = {};
+		// CPU가 데이터 작성중에는 GPU에게 읽지말라고 락을 걸음
+		context.Map(constantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+		//resource.pData = &transformMatrix;
+		// 복사
+		memcpy(resource.pData, &transformMatrix, sizeof(Matrix4));
+		// 락 풀기
+		context.Unmap(constantBuffer, 0);
 
 		// 버퍼 바인딩
 		context.VSSetConstantBuffers(0, 1, &constantBuffer);
