@@ -13,6 +13,7 @@ namespace GE
 		Transform();
 		~Transform();
 
+		void Tick();
 		void Bind();
 
 	public:

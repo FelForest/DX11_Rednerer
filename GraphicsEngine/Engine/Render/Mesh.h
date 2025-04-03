@@ -42,18 +42,27 @@ namespace GE
         Mesh();
         virtual ~Mesh() = default;
 
-        virtual void Draw();
+        // 컴포넌트 생겨서 필요 없어짐.
+        //virtual void Draw();
 
     public:
         // 객체지향 생각하면 Get Set 만드는게 맞는데 지울건데 그때 합시다
         // @Temp: 트랜스폼 정보(임시) : 엑터 만들어지면 넘어갈 값
-        Transform transform;
+        //Transform transform;
+
+        // 서브 메시 개수 변환 Getter
+        uint32 SubMeshCount() const;
+
+        std::weak_ptr<MeshData> GetSubMesh(int index) const;
 
     protected:
         //std::vector<std::shared_ptr<MeshData>> meshes;
+        // 서브 메시
         std::vector<std::weak_ptr<MeshData>> meshes;
         //std::vector<std::shared_ptr<class Shader>> shaders;
-        std::vector<std::weak_ptr<class Shader>> shaders;
+        //std::vector<std::weak_ptr<class Shader>> shaders;
+
+
 
     };
 }

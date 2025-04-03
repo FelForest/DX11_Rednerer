@@ -24,7 +24,7 @@ namespace GE
 		~Renderer();
 
 		// 그리기 함수
-		void Draw(/*씬 넘길 예정*/);
+		void Draw(std::shared_ptr<class Level> level);
 
 	private:
 		// 리소스
@@ -41,20 +41,5 @@ namespace GE
 
 		// 뷰포트
 		D3D11_VIEWPORT viewport;
-
-		// @Temp: 임시.
-// 정점 버퍼 (정점 정보를 전달하는 데 사용함).
-		ID3D11Buffer* vertexBuffer = nullptr;
-
-		// 인덱스 버퍼 (정점을 조립할 때 정점의 순서를 전달).
-		ID3D11Buffer* indexBuffer = nullptr;
-
-
-		std::unique_ptr<class TriangleMesh> Tmesh;
-		std::unique_ptr<class QuardMesh> Qmesh;
-		std::unique_ptr<class QuardMesh> Qmesh2;
-
-		// 쉐이더 객체.
-		std::unique_ptr<class Shader> shader;
 	};
 }

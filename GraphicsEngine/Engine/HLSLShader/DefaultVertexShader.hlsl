@@ -5,10 +5,16 @@ struct VertexInput
     float2 texCoord /*uv*/ : TEXCOORD;
 };
 
-// ConstantBUffer
+// ConstantBuffer
 cbuffer Transform : register(b0)
 {
     matrix worldMatrix;
+};
+
+// Constant Buffer
+cbuffer Camera : register(b1)
+{
+    matrix view;
 };
 
 struct VertexOutput
@@ -20,13 +26,14 @@ struct VertexOutput
 
 VertexOutput main(VertexInput input)
 {
-    VertexOutput ouput;
+    VertexOutput output;
     //ouput.position = float4(input.position, 1);
-    ouput.position = mul(float4(input.position, 1), worldMatrix);
-    ouput.color = input.color;
-    ouput.texCoord = input.texCoord;
+    output.position = mul(float4(input.position, 1), worldMatrix);
+    output.position = mul(output.position, view);
+    output.color = input.color;
+    output.texCoord = input.texCoord;
     
-    return ouput;
+    return output;
 }
 
 // 입력이 추가되면 출력도 추가되야함

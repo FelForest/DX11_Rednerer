@@ -42,22 +42,23 @@ namespace GE
 		}
 	}
 
-	void Transform::Bind()
+	void Transform::Tick()
 	{
-		//
-		static ID3D11DeviceContext& context = Engine::Get().Context();
-
 		// 데이터 업데이트
 		// 트랜스폼 행렬 계산(SRT)
 		transformMatrix = Matrix4::Scale(scale) * Matrix4::Rotation(rotation) * Matrix4::Translation(position);
 
 		// 전치 행렬 (CPU와 GPU가 행렬을 다루는 방식이 달라서).
 		// 행기준 행렬을 열 기준 행렬로 변환하기 위해 전치행렬 처리 -> 이게 GPU가 좋아하는 방식
-
 		transformMatrix = Matrix4::Transpose(transformMatrix);
+	}
+
+	void Transform::Bind()
+	{
+		//
+		static ID3D11DeviceContext& context = Engine::Get().Context();
 
 		// 버퍼 업데이트
-		//context.UpdateSubresource(constantBuffer, 0, nullptr, &transformMatrix, 0, 0);
 		D3D11_MAPPED_SUBRESOURCE resource = {};
 		// CPU가 데이터 작성중에는 GPU에게 읽지말라고 락을 걸음
 		context.Map(constantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);

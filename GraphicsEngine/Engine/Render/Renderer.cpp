@@ -8,6 +8,9 @@
 #include "QuardMesh.h"
 #include "Core/Common.h"
 
+#include "Level/Level.h"
+#include "Actor/Actor.h"
+
 namespace GE
 {
 	Renderer::Renderer(uint32 width, uint32 height, /*어느창에 그려야 하나*/HWND window)
@@ -86,6 +89,7 @@ namespace GE
 		swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
 		// 버퍼 스왑 방법
+		// 화면 주사율에 맞춰서 만들어 놓음
 		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 
 
@@ -157,33 +161,8 @@ namespace GE
 	Renderer::~Renderer()
 	{
 	}
-	void Renderer::Draw()
+	void Renderer::Draw(std::shared_ptr<Level> level)
 	{
-		if (Qmesh == nullptr)
-		{
-			// 쉐이더 객체 생성
-			Qmesh = std::make_unique<QuardMesh>();
-			// 이미 scale은 Vector3::One 인데 왜 그런걸까 
-			//Qmesh->transform.scale = Vector3::One;
-			Qmesh->transform.scale = Vector3::One * 0.5f;
-			Qmesh->transform.position.x = 0.5f;
-		}
-
-		if (Qmesh2 == nullptr)
-		{
-			Qmesh2 = std::make_unique<QuardMesh>();
-			Qmesh2->transform.scale = Vector3::One * 0.5f;
-			Qmesh2->transform.position.x = -0.5f;
-		}
-
-		if (Tmesh == nullptr)
-		{
-			Tmesh = std::make_unique<TriangleMesh>();
-			Tmesh->transform.scale = Vector3::One * 0.5f;
-			Tmesh->transform.position.x = 0.0f;
-			Tmesh->transform.position.y = 0.5f;
-		}
-
 		// 그리기 전 작업 (BeginScene)
 		// 매번 타겟팅 해줘야함, 하지면 여기는 안바꿈
 		context->OMSetRenderTargets(1, &renderTargetView, nullptr);
@@ -191,15 +170,31 @@ namespace GE
 		// 지우기(Clear)
 		float color[] = { 0.5647f, 0.6196f, 0.9529f, 0.0f };
 		context->ClearRenderTargetView(renderTargetView, color);
-		
-		// Test
-		Qmesh->Update(1.0f / 60.0f);
-		Qmesh2->Update(1.0f / 60.0f);
+
+		// 카메라 바인딩
+		if (level->GetCamera())
+		{
+			level->GetCamera()->Draw();
+		}
 
 		// 드로우(Draw) (Draw)
-		Qmesh->Draw();
-		Qmesh2->Draw();
-		Tmesh->Draw();
+		for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
+		{
+			// 액터 가져오기
+			auto actor = level->GetActor(ix);
+
+			if (actor->IsActive())
+			{
+				// 엔진은 드로우블 컴포넌트들을 다 뜯어와서 사용함
+				//for (const auto& component : actor->components)
+				//{
+				//	// Check if component is drawable
+				//}
+
+				
+				actor->Draw();
+			}
+		}
 
 		// 버퍼 교환 (EndScene/Present)
 		swapChain->Present(1u, 0u);

@@ -3,6 +3,8 @@
 
 #include "Math/Vector2.h"
 
+#include "Level/DemoLevel.h"
+
 // 메시지 : GUI에서 사용하는 이벤트 처리 방식
 // 창에 관련된 메시지(이벤트)를 처리하는 콜백 함수.
 LRESULT CALLBACK WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam)
@@ -72,6 +74,7 @@ int main()
     //Texture texture("T_coord.png");
     // 엔진 생성 및 실행
     Engine engine(1280, 800, TEXT("ENGINE DEMO"), GetModuleHandle(nullptr));
+    engine.SetLevle(std::make_shared<DemoLevel>());
     engine.Run();
 
     //std::cin.get();

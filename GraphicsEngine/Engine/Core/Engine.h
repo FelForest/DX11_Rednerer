@@ -18,6 +18,9 @@ namespace GE
 		// 엔진 실행 함수
 		void Run();
 
+		// 레벨 설정하는 함수
+		void SetLevle(std::shared_ptr<class Level> newLevel);
+
 		// 윈도우 메시지 처리 루프.
 		static LRESULT CALLBACK WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam);
 
@@ -44,6 +47,9 @@ namespace GE
 
 		// 모델 로더 객레
 		std::unique_ptr<class ModelLoader> modelLoader;
+
+		// 메인 레벨
+		std::shared_ptr<class Level> mainLevel;
 
 		// 싱글톤 객체
 		static Engine* instance;
