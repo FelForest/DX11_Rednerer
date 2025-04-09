@@ -1,4 +1,4 @@
-#include "QuardMesh.h"
+ï»¿#include "QuardMesh.h"
 #include "../Shader/Shader.h"
 #include "Shader/TextureMappingShader.h"
 #include "Resource/ShaderLoader.h"
@@ -11,7 +11,7 @@ namespace GE
 {
 	QuardMesh::QuardMesh()
 	{
-        // Á¤Á¡ ¹è¿­.
+        // ì •ì  ë°°ì—´.
         std::vector<Vertex> vertices =
         {
             Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(0.0f, 1.0f)),
@@ -20,10 +20,10 @@ namespace GE
             Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(1.0f, 1.0f))
         };
 
-        // ÀÎµ¦½º ¹è¿­.
+        // ì¸ë±ìŠ¤ ë°°ì—´.
         std::vector<uint32> indices = { 1, 2, 3, 3, 0, 1 };
 
-        // º¯È¯ test
+        // ë³€í™˜ test
         /*vertices[0].position = vertices[0].position * Matrix4::Scale(0.5f);
         vertices[1].position = vertices[1].position * Matrix4::Scale(0.5f);
         vertices[2].position = vertices[2].position * Matrix4::Scale(0.5f);
@@ -56,12 +56,12 @@ namespace GE
 
     void QuardMesh::Update(float deltaTime)
     {
-        // È¸Àü Ã³¸®
+        // íšŒì „ ì²˜ë¦¬
         //static float angle = 0.0f;
         //angle += 60.0f * deltaTime;
 
 
-        // È¸Àü Àû¿ë
+        // íšŒì „ ì ìš©
         //transform.rotation.z = angle;
 
         //Rotate(angle);
@@ -69,7 +69,7 @@ namespace GE
 
     void QuardMesh::Rotate(float angle)
     {
-        // Á¤Á¡ ¹è¿­.
+        // ì •ì  ë°°ì—´.
         std::vector<Vertex> vertices =
         {
             Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(0.0f, 1.0f)),
@@ -87,14 +87,14 @@ namespace GE
             result.assign(vertices.begin(), vertices.end());
         }
 
-        // È¸Àü Ã³¸® 
+        // íšŒì „ ì²˜ë¦¬ 
         Matrix4 rotation = Matrix4::RotationZ(angle);
         result[0].position = vertices[0].position * rotation;
         result[1].position = vertices[1].position * rotation;
         result[2].position = vertices[2].position * rotation;
         result[3].position = vertices[3].position * rotation;
 
-        // ¸Ş½ÃÀÇ Á¤Á¡ ¹öÆÛ ¾÷µ¥ÀÌÆ®
+        // ë©”ì‹œì˜ ì •ì  ë²„í¼ ì—…ë°ì´íŠ¸
         meshes[0].lock()->UpdateVertexBuffer(result);
 
     }

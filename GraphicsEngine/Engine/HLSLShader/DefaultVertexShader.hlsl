@@ -36,4 +36,4 @@ VertexOutput main(VertexInput input)
     return output;
 }
 
-// ÀÔ·ÂÀÌ Ãß°¡µÇ¸é Ãâ·Âµµ Ãß°¡µÇ¾ßÇÔ
+// ì…ë ¥ì´ ì¶”ê°€ë˜ë©´ ì¶œë ¥ë„ ì¶”ê°€ë˜ì•¼í•¨

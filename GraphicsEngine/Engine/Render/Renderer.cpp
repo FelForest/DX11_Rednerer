@@ -1,4 +1,4 @@
-#include "Renderer.h"
+ï»¿#include "Renderer.h"
 #include <vector>
 #include <d3dcompiler.h>
 
@@ -13,21 +13,21 @@
 
 namespace GE
 {
-	Renderer::Renderer(uint32 width, uint32 height, /*¾î´ÀÃ¢¿¡ ±×·Á¾ß ÇÏ³ª*/HWND window)
+	Renderer::Renderer(uint32 width, uint32 height, /*ì–´ëŠì°½ì— ê·¸ë ¤ì•¼ í•˜ë‚˜*/HWND window)
 	{
-		// ÀåÄ¡ »ı¼º¿¡ »ç¿ëÇÏ´Â ¿É¼Ç
+		// ì¥ì¹˜ ìƒì„±ì— ì‚¬ìš©í•˜ëŠ” ì˜µì…˜
 		uint32 flag = 0u;
 
 #if _DEBUG
-		// µğ¹ö±× »ı¼ºÀ» ´õ ÇØÁÜ
+		// ë””ë²„ê·¸ ìƒì„±ì„ ë” í•´ì¤Œ
 		flag |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
-		// »ı¼ºÇÒ ¶óÀÌºê·¯¸® ¹öÀü
+		// ìƒì„±í•  ë¼ì´ë¸ŒëŸ¬ë¦¬ ë²„ì „
 		D3D_FEATURE_LEVEL featureLevels[] =
 		{
-			// ½ÃµµÇØ º¸°í ¾ÈµÇ¸é ´ÙÀ½²¨ ÇÑ´Ù´Â ´À³¦
-			// ÃÖ½Å ¹öÀüÀÌ °¡Àå À§¿¡ ÀÖ´Â°Ô ¸ÂÀ½
+			// ì‹œë„í•´ ë³´ê³  ì•ˆë˜ë©´ ë‹¤ìŒêº¼ í•œë‹¤ëŠ” ëŠë‚Œ
+			// ìµœì‹  ë²„ì „ì´ ê°€ì¥ ìœ„ì— ìˆëŠ”ê²Œ ë§ìŒ
 			D3D_FEATURE_LEVEL_11_1,
 			D3D_FEATURE_LEVEL_11_0,
 		};
@@ -39,19 +39,19 @@ namespace GE
 			nullptr, flag, featureLevels,
 			_countof(featureLevels),
 			D3D11_SDK_VERSION, &device,
-			/*¹«½¼ ¹öÀü ¾²´ÂÁö ¾Ë·ÁÁÖ´Â °Í*/
+			/*ë¬´ìŠ¨ ë²„ì „ ì“°ëŠ”ì§€ ì•Œë ¤ì£¼ëŠ” ê²ƒ*/
 			&outFeatureLevel,
 			&context), TEXT("Failed to create devices."));
 
-		// IDXGIFactory ¸®¼Ò½º »ı¼º
+		// IDXGIFactory ë¦¬ì†ŒìŠ¤ ìƒì„±
 		IDXGIFactory* factory = nullptr;
-		// ÀÌ°Ô Á¤¼®
+		// ì´ê²Œ ì •ì„
 		//CreateDXGIFactory(__uuidof(factory), reinterpret_cast<void**>(&factory));
 
 		ThrowIfFailed(CreateDXGIFactory(IID_PPV_ARGS(&factory)),
 			TEXT("Failed to create dxgifactory"));
 
-		// ½º¿Ò Ã¼ÀÎ Á¤º¸ ±¸Á¶Ã¼
+		// ìŠ¤ì™‘ ì²´ì¸ ì •ë³´ êµ¬ì¡°ì²´
 		/*
 		DXGI_MODE_DESC BufferDesc;
 		DXGI_SAMPLE_DESC SampleDesc;
@@ -63,42 +63,42 @@ namespace GE
 		UINT Flags;
 		*/
 
-		// ¸áÆ¼ »ùÇÃ¸µ Áö¿ì³Ê ¿©ºÎ È®ÀÎ
+		// ë©œí‹° ìƒ˜í”Œë§ ì§€ìš°ë„ˆ ì—¬ë¶€ í™•ì¸
 
 
 
 		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
 
-		// Ã¢ ¸ğµå
+		// ì°½ ëª¨ë“œ
 		swapChainDesc.Windowed = true;									
 		swapChainDesc.OutputWindow = window;
 
 		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		// ¹é¹öÆÛ °³¼ö
+		// ë°±ë²„í¼ ê°œìˆ˜
 		swapChainDesc.BufferCount = 2;									
 
-		// ¿¡ÀÏ¸®¾î½Ì / ¾Ù¸®¾î½Ì
-		// ¸ÖÆ¼ »ùÇÃ¸µ °¹¼ö
-		// 1°³´Â ¾È¾´´Ù´Â ¶æ
+		// ì—ì¼ë¦¬ì–´ì‹± / ì•¨ë¦¬ì–´ì‹±
+		// ë©€í‹° ìƒ˜í”Œë§ ê°¯ìˆ˜
+		// 1ê°œëŠ” ì•ˆì“´ë‹¤ëŠ” ëœ»
 		swapChainDesc.SampleDesc.Count = 1;		
-		// ¸ÖÆ¼ »ùÇÃ¸µ ¼öÁØ
+		// ë©€í‹° ìƒ˜í”Œë§ ìˆ˜ì¤€
 		swapChainDesc.SampleDesc.Quality = 0;							
 
 		swapChainDesc.BufferDesc.Width = width;
 		swapChainDesc.BufferDesc.Height = height;
 		swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
-		// ¹öÆÛ ½º¿Ò ¹æ¹ı
-		// È­¸é ÁÖ»çÀ²¿¡ ¸ÂÃç¼­ ¸¸µé¾î ³õÀ½
+		// ë²„í¼ ìŠ¤ì™‘ ë°©ë²•
+		// í™”ë©´ ì£¼ì‚¬ìœ¨ì— ë§ì¶°ì„œ ë§Œë“¤ì–´ ë†“ìŒ
 		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 
 
-		// ÀåÄ¡ »ı¼º
-		// ÀÌ°Ç ÇÒ°Ô ¸¹Àºµ¥ -> ¿©·¯°¡Áö ¾Ë ¼ö ÀÖÀ½
+		// ì¥ì¹˜ ìƒì„±
+		// ì´ê±´ í• ê²Œ ë§ì€ë° -> ì—¬ëŸ¬ê°€ì§€ ì•Œ ìˆ˜ ìˆìŒ
 		//D3D11CreateDevice;
 
 		
-		// 3°³¸¸ »ı¼º
+		// 3ê°œë§Œ ìƒì„±
 		//ThrowIfFailed(D3D11CreateDeviceAndSwapChain(
 		//	nullptr,
 		//	D3D_DRIVER_TYPE_HARDWARE,
@@ -107,7 +107,7 @@ namespace GE
 		//	featureLevels,
 		//	_countof(featureLevels),
 		//	D3D11_SDK_VERSION,
-		//	&swapChainDesc, /*À©µµ¿ì¿¡ ÅëÇÕ µÇ°í ³ª¼­ ¸ŞÅ©·Î·Î µÈ°Å*/
+		//	&swapChainDesc, /*ìœˆë„ìš°ì— í†µí•© ë˜ê³  ë‚˜ì„œ ë©”í¬ë¡œë¡œ ëœê±°*/
 		//	&swapChain,
 		//	&device,
 		//	nullptr,
@@ -121,17 +121,17 @@ namespace GE
 			
 		}*/
 
-		// SwapChain »ı¼º
+		// SwapChain ìƒì„±
 		ThrowIfFailed(factory->CreateSwapChain(
 			device,
 			&swapChainDesc,
 			&swapChain
 		), TEXT("Failed to create a swap chain."));
 
-		// ·£´õ Å¸°Ù ºä »ı¼º.
+		// ëœë” íƒ€ê²Ÿ ë·° ìƒì„±.
 		ID3D11Texture2D* backbuffer = nullptr;
 
-		// ¹öÆÛ ¹Ş¾Æ¿À±â
+		// ë²„í¼ ë°›ì•„ì˜¤ê¸°
 		//swapChain->GetBuffer(0, __uuidof(backbuffer), reinterpret_cast<void**>(&backbuffer));
 		ThrowIfFailed(swapChain->GetBuffer(
 			0, IID_PPV_ARGS(&backbuffer)
@@ -142,11 +142,15 @@ namespace GE
 			backbuffer, nullptr, &renderTargetView
 		), TEXT("Failed to create render target view."));
 
-		// ·£´õ Å¸°Ù ºä ¹ÙÀÎµù(¿¬°á)
-		context->OMSetRenderTargets(1, &renderTargetView, nullptr);
-		// ¿ø·¡´Â µû·Î ¿À·ù ÆÇÁ¤ ÇØ Áà¾ßÇÔ ³ªÁß¿¡ µû·Î ÇØÁà
+		// ì‚¬ìš©í•œ ë¦¬ì†ŒìŠ¤ í•´ì œ
+		backbuffer->Release();
+		backbuffer = nullptr;
 
-		// ºä Æ÷Æ®(È­¸é)
+		// ëœë” íƒ€ê²Ÿ ë·° ë°”ì¸ë”©(ì—°ê²°)
+		context->OMSetRenderTargets(1, &renderTargetView, nullptr);
+		// ì›ë˜ëŠ” ë”°ë¡œ ì˜¤ë¥˜ íŒì • í•´ ì¤˜ì•¼í•¨ ë‚˜ì¤‘ì— ë”°ë¡œ í•´ì¤˜
+
+		// ë·° í¬íŠ¸(í™”ë©´)
 		viewport.TopLeftX = 0.0f;
 		viewport.TopLeftY = 0.0f;
 		viewport.Width = (float)width;
@@ -154,38 +158,68 @@ namespace GE
 		viewport.MaxDepth = 1.0f;
 		viewport.MinDepth = 0.0f;
 
-		// ºäÆ÷Æ® ¼³Á¤
+		// ë·°í¬íŠ¸ ì„¤ì •
 		context->RSSetViewports(1, &viewport);
 	}
 
 	Renderer::~Renderer()
 	{
+		// DX ë¦¬ì†ŒìŠ¤ í•´ì œ
+		if (context)
+		{
+			context->Release();
+			context = nullptr;
+		}
+
+		if (swapChain)
+		{
+			swapChain->Release();
+			swapChain = nullptr;
+		}
+
+		if (renderTargetView)
+		{
+			renderTargetView->Release();
+			renderTargetView = nullptr;
+		}
+
+		if (device)
+		{
+			device->Release();
+			device = nullptr;
+		}
 	}
 	void Renderer::Draw(std::shared_ptr<Level> level)
 	{
-		// ±×¸®±â Àü ÀÛ¾÷ (BeginScene)
-		// ¸Å¹ø Å¸°ÙÆÃ ÇØÁà¾ßÇÔ, ÇÏÁö¸é ¿©±â´Â ¾È¹Ù²Ş
+		// í™”ë©´ í¬ê¸° ë³€ê²½ ì¤‘ì¼ë•ŒëŠ” ì¢…ë£Œ
+		if (isResizing)
+		{
+			return;
+		}
+
+		// ê·¸ë¦¬ê¸° ì „ ì‘ì—… (BeginScene)
+		// ë§¤ë²ˆ íƒ€ê²ŸíŒ… í•´ì¤˜ì•¼í•¨, í•˜ì§€ë©´ ì—¬ê¸°ëŠ” ì•ˆë°”ê¿ˆ
 		context->OMSetRenderTargets(1, &renderTargetView, nullptr);
 		
-		// Áö¿ì±â(Clear)
+		// ì§€ìš°ê¸°(Clear)
 		float color[] = { 0.5647f, 0.6196f, 0.9529f, 0.0f };
 		context->ClearRenderTargetView(renderTargetView, color);
 
-		// Ä«¸Ş¶ó ¹ÙÀÎµù
+		// ì¹´ë©”ë¼ ë°”ì¸ë”©
 		if (level->GetCamera())
 		{
 			level->GetCamera()->Draw();
 		}
 
-		// µå·Î¿ì(Draw) (Draw)
+		// ë“œë¡œìš°(Draw) (Draw)
 		for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
 		{
-			// ¾×ÅÍ °¡Á®¿À±â
+			// ì•¡í„° ê°€ì ¸ì˜¤ê¸°
 			auto actor = level->GetActor(ix);
 
 			if (actor->IsActive())
 			{
-				// ¿£ÁøÀº µå·Î¿ìºí ÄÄÆ÷³ÍÆ®µéÀ» ´Ù ¶â¾î¿Í¼­ »ç¿ëÇÔ
+				// ì—”ì§„ì€ ë“œë¡œìš°ë¸” ì»´í¬ë„ŒíŠ¸ë“¤ì„ ë‹¤ ëœ¯ì–´ì™€ì„œ ì‚¬ìš©í•¨
 				//for (const auto& component : actor->components)
 				//{
 				//	// Check if component is drawable
@@ -196,8 +230,59 @@ namespace GE
 			}
 		}
 
-		// ¹öÆÛ ±³È¯ (EndScene/Present)
+		// ë²„í¼ êµí™˜ (EndScene/Present)
 		swapChain->Present(1u, 0u);
+	}
+
+	void Renderer::OnResize(uint32 width, uint32 height)
+	{
+		// ì°½ ë³€ê²½ìœ¼ë¡œ ì¸í•œ ë¦¬ì†ŒìŠ¤ í¬ê¸° ì¡°ì •
+		if (!device || !context || !swapChain)
+		{
+			return;
+		}
+
+		isResizing = true;
+		
+		// context ë¹„ìš°ê¸°
+		context->ClearState();
+		context->Flush();
+
+		// ëœë” íƒ€ê²Ÿ í•´ì œ
+		if (renderTargetView)
+		{
+			renderTargetView->Release();
+			renderTargetView = nullptr;
+		}
+
+		// ìŠ¤ì™‘ì²´ì¸ ë°±ë²„í¼ í¬ê¸° ë³€ê²½
+		ThrowIfFailed(
+			swapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0), TEXT("Failed to resize swapchain buffer"));
+
+		// ëœë” íƒ€ê²Ÿ ì¬ìƒì„±
+		ID3D11Texture2D* backBuffer = nullptr;
+		ThrowIfFailed(
+			swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer)), TEXT("Failed to get buffer from swapchain"));
+
+		ThrowIfFailed(
+			device->CreateRenderTargetView(backBuffer, nullptr, &renderTargetView), TEXT("Failed to created render target view")
+		);
+
+		backBuffer->Release();
+		backBuffer = nullptr;
+
+		// ë·°í¬íŠ¸ ì—…ë°ì´íŠ¸.
+		viewport.TopLeftX = 0.0f;
+		viewport.TopLeftY = 0.0f;
+		viewport.Width = (float)width;
+		viewport.Height = (float)height;
+		viewport.MaxDepth = 1.0f;
+		viewport.MinDepth = 0.0f;
+
+		// ë·°í¬íŠ¸ ì„¤ì •.
+		context->RSSetViewports(1, &viewport);
+		
+		isResizing = false;
 	}
 	
 }

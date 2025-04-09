@@ -1,56 +1,56 @@
-#include "Window.h"
+ï»¿#include "Window.h"
 
 namespace GE
 {
 	Window::Window(uint32 width, uint32 height, const std::wstring& title, HINSTANCE instance, WNDPROC messageProcedure)
         : width(width), height(height), title(title), instance(instance), className(TEXT("Sample"))
 	{
-        // TEXT´Â À¯´ÏÄÚµå¿¡ °üÇÑ ¸ŞÅ©·ÎÀÓ : Áö±İ ¼Ó¼º¿¡¼­ À¯´ÏÄÚµå»ç¿ëÇÑ´Ù°í ¸»ÇßÀ½
-        // ¹®ÀÚ¿­ ÇÏ³ª ¹Ù²Ù´Âµ¥ ¸¹Àº ÀÏÀÌ ÀÖÀ½
+        // TEXTëŠ” ìœ ë‹ˆì½”ë“œì— ê´€í•œ ë©”í¬ë¡œì„ : ì§€ê¸ˆ ì†ì„±ì—ì„œ ìœ ë‹ˆì½”ë“œì‚¬ìš©í•œë‹¤ê³  ë§í–ˆìŒ
+        // ë¬¸ìì—´ í•˜ë‚˜ ë°”ê¾¸ëŠ”ë° ë§ì€ ì¼ì´ ìˆìŒ
 
-        // Ã¢ »ı¼º¿¡ ÇÊ¿äÇÑ ¼³Á¤ ±¸Á¶Ã¼.
-        WNDCLASS wc = { }; // ±âº»°ª ±¸¹® °ªÀÌ 0ÀÓ
+        // ì°½ ìƒì„±ì— í•„ìš”í•œ ì„¤ì • êµ¬ì¡°ì²´.
+        WNDCLASS wc = { }; // ê¸°ë³¸ê°’ êµ¬ë¬¸ ê°’ì´ 0ì„
 
-        // ¸Ş½ÃÁö Ã³¸®¸¦ À§ÇÑ Äİ¹é Àü´Ş
+        // ë©”ì‹œì§€ ì²˜ë¦¬ë¥¼ ìœ„í•œ ì½œë°± ì „ë‹¬
         wc.lpfnWndProc = messageProcedure;
 
-        // ÇÁ·Î±×·¥ ÁÖ¼Ò Àü´Ş
+        // í”„ë¡œê·¸ë¨ ì£¼ì†Œ ì „ë‹¬
         wc.hInstance = instance;
 
-        // Ã¢ »ı¼º¿¡ »ç¿ëÇÒ Å¬·¡½º ÀÌ¸§ Àü´Ş
+        // ì°½ ìƒì„±ì— ì‚¬ìš©í•  í´ë˜ìŠ¤ ì´ë¦„ ì „ë‹¬
         wc.lpszClassName = className.c_str();
 
-        // Å¬·¡½º µî·Ï
+        // í´ë˜ìŠ¤ ë“±ë¡
         if (!RegisterClass(&wc))
         {
-            // ¿À·ù ¸Ş½ÃÁö È®ÀÎ.
+            // ì˜¤ë¥˜ ë©”ì‹œì§€ í™•ì¸.
             //auto error = GetLastError();
 
-            // ¸Ş½ÃÁö Ãâ·Â.
-            // std::cout ¸ø¾¸
-            // 1¹æ¹ı - Ãâ·ÂÃ¢(Output)À» ÀÌ¿ë
+            // ë©”ì‹œì§€ ì¶œë ¥.
+            // std::cout ëª»ì”€
+            // 1ë°©ë²• - ì¶œë ¥ì°½(Output)ì„ ì´ìš©
             OutputDebugStringW(TEXT("Failed to register a window class\n"));
 
-            // 2¹æ¹ı - ¸Ş½ÃÁö ¹Ú½º ÀÌ¿ë
+            // 2ë°©ë²• - ë©”ì‹œì§€ ë°•ìŠ¤ ì´ìš©
             MessageBox(nullptr, TEXT("Failed to register a window"), TEXT("Error"), MB_OK);
 
-            // Áß´ÜÁ¡ ¼³Á¤
+            // ì¤‘ë‹¨ì  ì„¤ì •
             __debugbreak();
         }
 
-        // Ã¢ÀÇ Å©±â
-        // Å¸ÀÌÆ²¹Ù °°Àº°Ô ÀÖÀ»¶§´Â À©µµ¿ì »çÀÌÁî ¼³Á¤ ÇØ¾ß ÇÏ±â ¶§¹®¿¡ Èûµë
+        // ì°½ì˜ í¬ê¸°
+        // íƒ€ì´í‹€ë°” ê°™ì€ê²Œ ìˆì„ë•ŒëŠ” ìœˆë„ìš° ì‚¬ì´ì¦ˆ ì„¤ì • í•´ì•¼ í•˜ê¸° ë•Œë¬¸ì— í˜ë“¬
 
-        // È­¸é ½ÃÀÛ À§Ä¡ Á¶Á¤
+        // í™”ë©´ ì‹œì‘ ìœ„ì¹˜ ì¡°ì •
         unsigned int positionX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2;
         unsigned int positionY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
 
-        // Ã¢ Å©±â Á¶Á¤
+        // ì°½ í¬ê¸° ì¡°ì •
         RECT rect = { 0, 0, (long)width, (long)height };
-        // ¿¹¿ÜÃ³¸® ÇØÁà¾ßÇÔ - º¸ÅëÀº ¾ÈÀÏ¾î ³²
+        // ì˜ˆì™¸ì²˜ë¦¬ í•´ì¤˜ì•¼í•¨ - ë³´í†µì€ ì•ˆì¼ì–´ ë‚¨
         AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
 
-        // Ã¢ Å©±â Àç¼³Á¤
+        // ì°½ í¬ê¸° ì¬ì„¤ì •
         unsigned int windowWidth = rect.right - rect.left;
         unsigned int windowHeight = rect.bottom - rect.top;
 
@@ -69,31 +69,31 @@ namespace GE
             nullptr        // Additional application data
         );
 
-        // ½ÇÆĞ½Ã ¿À·ù¹Ú½º
+        // ì‹¤íŒ¨ì‹œ ì˜¤ë¥˜ë°•ìŠ¤
         if (handle == nullptr)
         {
-            // ¸Ş½ÃÁö Ãâ·Â.
-            // std::cout ¸ø¾¸
-            // 1¹æ¹ı - Ãâ·ÂÃ¢(Output)À» ÀÌ¿ë
+            // ë©”ì‹œì§€ ì¶œë ¥.
+            // std::cout ëª»ì”€
+            // 1ë°©ë²• - ì¶œë ¥ì°½(Output)ì„ ì´ìš©
             OutputDebugString(TEXT("Failed to create a window class\n"));
 
-            // 2¹æ¹ı - ¸Ş½ÃÁö ¹Ú½º ÀÌ¿ë
+            // 2ë°©ë²• - ë©”ì‹œì§€ ë°•ìŠ¤ ì´ìš©
             MessageBox(nullptr, TEXT("Failed to create a window"), TEXT("Error"), MB_OK);
 
-            // Áß´ÜÁ¡ ¼³Á¤
+            // ì¤‘ë‹¨ì  ì„¤ì •
             __debugbreak();
         }
 
-        // Ã¢ º¸ÀÌ±â 
-        // µÚ¿¡ ¿É¼Ç Ã£¾Æº¸±â
+        // ì°½ ë³´ì´ê¸° 
+        // ë’¤ì— ì˜µì…˜ ì°¾ì•„ë³´ê¸°
         ShowWindow(handle, SW_SHOW);
 
-        // Ã¢ ¸Ş½ÃÁö ¾÷µ¥ÀÌÆ®
+        // ì°½ ë©”ì‹œì§€ ì—…ë°ì´íŠ¸
         UpdateWindow(handle);
 	}
 	Window::~Window()
 	{
-        // Å¬·¡½º µî·Ï ÇØÁ¦
+        // í´ë˜ìŠ¤ ë“±ë¡ í•´ì œ
         UnregisterClass(className.c_str(), instance);
 	}
 	void Window::SetWidthHeight(uint32 width, uint32 height)

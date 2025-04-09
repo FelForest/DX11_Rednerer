@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <Windows.h>
 #include <string>
@@ -6,7 +6,7 @@
 
 namespace GE
 {
-	// À©µµ¿ì Å¬·¡½º
+	// ìœˆë„ìš° í´ë˜ìŠ¤
 	class Window
 	{
 	public:
@@ -18,7 +18,7 @@ namespace GE
 		inline const uint32 Width() const { return width; }
 		inline const uint32 Height() const { return height; }
 		inline HWND Handle() const { return handle; }
-
+		std::wstring Title() const { return title; }
 		void SetWidthHeight(uint32 width, uint32 height);
 
 	private:

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 #include <Windows.h>
@@ -9,49 +9,60 @@ namespace GE
 {
 	class Engine
 	{
-		// ÇöÀç´Â ÀüÃ¼ ¸®¼Ò½º¸¦ °ü¸®ÇÏµµ·Ï ¸¸µë
+		// í˜„ì¬ëŠ” ì „ì²´ ë¦¬ì†ŒìŠ¤ë¥¼ ê´€ë¦¬í•˜ë„ë¡ ë§Œë“¬
 	public:
 		Engine(uint32 width, uint32 height, const std::wstring& title, HINSTANCE hInstance);
 		virtual ~Engine();
 
 
-		// ¿£Áø ½ÇÇà ÇÔ¼ö
+		// ì—”ì§„ ì‹¤í–‰ í•¨ìˆ˜
 		void Run();
 
-		// ·¹º§ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+		// ë ˆë²¨ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 		void SetLevle(std::shared_ptr<class Level> newLevel);
 
-		// À©µµ¿ì ¸Ş½ÃÁö Ã³¸® ·çÇÁ.
+		// ìœˆë„ìš° ë©”ì‹œì§€ ì²˜ë¦¬ ë£¨í”„.
 		static LRESULT CALLBACK WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam);
 
-		// ½Ì±ÛÅæ Á¢±Ù ÇÔ¼ö.
+		// ì‹±ê¸€í†¤ ì ‘ê·¼ í•¨ìˆ˜.
 		static Engine& Get();
 
 		// Render Getter
 		ID3D11Device& Device() const;
 		ID3D11DeviceContext& Context() const;
 
-	protected:
+		// í™”ë©´ í¬ê¸° ë³€ê²½ ì´ë²¤íŠ¸ ëŒ€ì‘ í•¨ìˆ˜
+		void OnResize(uint32 width, uint32 height);
 
-		// Ã¢ °´Ã¼
+		// ì—”ì§„ ì¢…ë£Œ í•¨ìˆ˜
+		void Quit();
+	protected:
+		
+		// ì—”ì§„ ì¢…ë£Œ í”Œë˜ê·¸
+		bool isQuit = false;;
+		// ì°½ ê°ì²´
 		std::shared_ptr<class Window> window;
 
-		// ·£´õ·¯ °´Ã¼
+		// ëœë”ëŸ¬ ê°ì²´
 		std::shared_ptr<class Renderer> renderer;
 
-		// ¼ÎÀÌ´õ ·Î´õ °´Ã¼
+		// ì…°ì´ë” ë¡œë” ê°ì²´
 		std::unique_ptr<class ShaderLoader> shaderLoader;
 
-		// ÅØ½ºÃ³ ·Î´õ °´·¹
+		// í…ìŠ¤ì²˜ ë¡œë” ê°ë ˆ
 		std::unique_ptr<class TextureLoader> textureLoader;
 
-		// ¸ğµ¨ ·Î´õ °´·¹
+		// ëª¨ë¸ ë¡œë” ê°ë ˆ
 		std::unique_ptr<class ModelLoader> modelLoader;
 
-		// ¸ŞÀÎ ·¹º§
+		// ë©”ì¸ ë ˆë²¨
 		std::shared_ptr<class Level> mainLevel;
+		
+		// ì…ë ¥ ê´€ë¦¬ì ê°ì²´
+		std::unique_ptr<class InputController> inputController;
 
-		// ½Ì±ÛÅæ °´Ã¼
+		// ì‹±ê¸€í†¤ ê°ì²´
 		static Engine* instance;
+
 	};
 }

@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 
-// DirectX11 Çì´õ.
+// DirectX11 í—¤ë”.
 #include <d3d11.h>
 #include <dxgi.h>
 #include <memory>
@@ -11,35 +11,41 @@
 namespace GE
 {
 	class Shader;
-	// ±×·¡ÇÈÄ«µå¿¡¼­ Ã³¸®ÇÏ´Â ÀÏ/¸®¼Ò½º¸¦ °ü¸®ÇÏ´Â Å¬·¡½º
+	// ê·¸ë˜í”½ì¹´ë“œì—ì„œ ì²˜ë¦¬í•˜ëŠ” ì¼/ë¦¬ì†ŒìŠ¤ë¥¼ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤
 	// RHI - Render Hardware Interface
 	class Renderer
 	{
 
-		// ¿£Áø Å¬·¡½º friend ¼±¾ğ
+		// ì—”ì§„ í´ë˜ìŠ¤ friend ì„ ì–¸
 		friend class Engine;
 
 	public:
 		Renderer(uint32 width, uint32 height, HWND window);
 		~Renderer();
 
-		// ±×¸®±â ÇÔ¼ö
+		// ê·¸ë¦¬ê¸° í•¨ìˆ˜
 		void Draw(std::shared_ptr<class Level> level);
 
+		// í¬ê¸° ë³€ê²½ í•¨ìˆ˜
+		void OnResize(uint32 width, uint32 height);
+
 	private:
-		// ¸®¼Ò½º
-		// ÀåÄ¡·ù
-		// »ı¼º
+
+		// í¬ê¸° ë³€ê²½ ì—¬ë¶€ í™•ì¸ ë³€ìˆ˜
+		bool isResizing = false;
+		// ë¦¬ì†ŒìŠ¤
+		// ì¥ì¹˜ë¥˜
+		// ìƒì„±
 		ID3D11Device* device = nullptr;
-		// ±×¸®±â
+		// ê·¸ë¦¬ê¸°
 		ID3D11DeviceContext* context = nullptr;
-		// ½º¿Ò - ¹é ÇÁ·ĞÆ® Ãâ·Â °ü·Ã
+		// ìŠ¤ì™‘ - ë°± í”„ë¡ íŠ¸ ì¶œë ¥ ê´€ë ¨
 		IDXGISwapChain* swapChain = nullptr;
 
-		// ¹öÆÛ
+		// ë²„í¼
 		ID3D11RenderTargetView* renderTargetView = nullptr;
 
-		// ºäÆ÷Æ®
+		// ë·°í¬íŠ¸
 		D3D11_VIEWPORT viewport;
 	};
 }

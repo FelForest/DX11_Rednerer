@@ -1,4 +1,4 @@
-#include "DemoLevel.h"
+ï»¿#include "DemoLevel.h"
 
 #include "Actor/Actor.h"
 
@@ -16,14 +16,14 @@ namespace GE
 {
 	DemoLevel::DemoLevel()
 	{
-		// µ¥¸ğ ¾À(·¹º§) ±¸¼º
+		// ë°ëª¨ ì”¬(ë ˆë²¨) êµ¬ì„±
 		std::shared_ptr<QuadActor> actor = std::make_shared<QuadActor>();
 		
 
-		// Ä«¸Ş¶ó ¾×ÅÍ »ı¼º
+		// ì¹´ë©”ë¼ ì•¡í„° ìƒì„±
 		std::shared_ptr<Actor> cameraActor = std::make_shared<Actor>();
 		cameraActor->AddComponent(std::make_shared<CameraComponent>());
-		// ¿¢ÅÍ¸¦ ·¹º§¿¡ Ãß°¡
+		// ì—‘í„°ë¥¼ ë ˆë²¨ì— ì¶”ê°€
 		AddActor(actor);
 		AddActor(cameraActor);
 

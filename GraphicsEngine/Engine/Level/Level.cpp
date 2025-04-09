@@ -1,4 +1,4 @@
-#include "Level.h"
+ï»¿#include "Level.h"
 #include "Actor/Actor.h"
 #include "Component/CameraComponent.h"
 namespace GE
@@ -26,7 +26,7 @@ namespace GE
 			cameraActor->Tick(deltaTime);
 		}
 
-		// ¾×ÅÍÇØ¼­ Çß´ø ¿¹¿ÜÃ³¸®¸¦ ¿©±â¼­ ÇÏ´Â°Ô ¸Â´Ù°í ÆÇ´Ü -> ÇÑ¹ø´õ Å¸°í µé¾î°¥ ÀÌÀ¯°¡ ÀÖ³ª? -> ±×·±µ¥ ±×·¯¸é °á±¹ ¾×ÅÍÇÑÅ× ¹°¾îºÁ¾ß ÇÏ´Ï±î ÀÇ¹ÌÀÖ³ª?
+		// ì•¡í„°í•´ì„œ í–ˆë˜ ì˜ˆì™¸ì²˜ë¦¬ë¥¼ ì—¬ê¸°ì„œ í•˜ëŠ”ê²Œ ë§ë‹¤ê³  íŒë‹¨ -> í•œë²ˆë” íƒ€ê³  ë“¤ì–´ê°ˆ ì´ìœ ê°€ ìˆë‚˜? -> ê·¸ëŸ°ë° ê·¸ëŸ¬ë©´ ê²°êµ­ ì•¡í„°í•œí…Œ ë¬¼ì–´ë´ì•¼ í•˜ë‹ˆê¹Œ ì˜ë¯¸ìˆë‚˜?
 		for (const auto& actor : actors)
 		{
 			actor->Tick(deltaTime);
@@ -35,26 +35,26 @@ namespace GE
 
 	void Level::AddActor(std::shared_ptr<Actor> newActor)
 	{
-		// »õ·Î Ãß°¡ÇÏ´Â ¾×ÅÍ°¡ Ä«¸Ş¶ó ÄÄÆ÷³ÍÆ®¸¦ °¡Á³´ÂÁö È®ÀÎ
-		// °¡Á³´Ù¸é ¸ŞÀÎ Ä«¸Ş¶ó·Î ¼³Á¤
+		// ìƒˆë¡œ ì¶”ê°€í•˜ëŠ” ì•¡í„°ê°€ ì¹´ë©”ë¼ ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì¡ŒëŠ”ì§€ í™•ì¸
+		// ê°€ì¡Œë‹¤ë©´ ë©”ì¸ ì¹´ë©”ë¼ë¡œ ì„¤ì •
 		for (auto component : newActor->components)
 		{
 			std::shared_ptr<CameraComponent> cameraComponent = std::dynamic_pointer_cast<CameraComponent>(component);
 
 			if (cameraComponent)
 			{
-				// Ä«¸Ş¶ó´Â Æ¯º° °ü¸®¸¦ À§ÇØ actors¿¡ ¾È³ÖÀ½
+				// ì¹´ë©”ë¼ëŠ” íŠ¹ë³„ ê´€ë¦¬ë¥¼ ìœ„í•´ actorsì— ì•ˆë„£ìŒ
 				cameraActor = newActor;
 				return;
 			}
 		}
 
-		// ¿ø·¡´Â ÀÌ¹Ì ÀÖ´Â ¾×ÅÍ°¡ ´Ù½Ã µé¾î°¡´Â °ÍÀ» ¸·´Â ¹æ½ÄÀ¸·Î ÇØ¾ßÇÔ
+		// ì›ë˜ëŠ” ì´ë¯¸ ìˆëŠ” ì•¡í„°ê°€ ë‹¤ì‹œ ë“¤ì–´ê°€ëŠ” ê²ƒì„ ë§‰ëŠ” ë°©ì‹ìœ¼ë¡œ í•´ì•¼í•¨
 		actors.emplace_back(newActor);
 	}
 	std::shared_ptr<Actor> Level::GetActor(int index) const
 	{
-		// ¿¹¿ÜÃ³¸®
+		// ì˜ˆì™¸ì²˜ë¦¬
 		if (index < 0 || index >= (int)actors.size())
 		{
 			return nullptr;

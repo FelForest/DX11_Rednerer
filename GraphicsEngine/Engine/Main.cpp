@@ -1,24 +1,24 @@
-#include "Core/Engine.h"
+ï»¿#include "Core/Engine.h"
 #include <iostream>
 
 #include "Math/Vector2.h"
 
 #include "Level/DemoLevel.h"
 
-// ¸Ş½ÃÁö : GUI¿¡¼­ »ç¿ëÇÏ´Â ÀÌº¥Æ® Ã³¸® ¹æ½Ä
-// Ã¢¿¡ °ü·ÃµÈ ¸Ş½ÃÁö(ÀÌº¥Æ®)¸¦ Ã³¸®ÇÏ´Â Äİ¹é ÇÔ¼ö.
+// ë©”ì‹œì§€ : GUIì—ì„œ ì‚¬ìš©í•˜ëŠ” ì´ë²¤íŠ¸ ì²˜ë¦¬ ë°©ì‹
+// ì°½ì— ê´€ë ¨ëœ ë©”ì‹œì§€(ì´ë²¤íŠ¸)ë¥¼ ì²˜ë¦¬í•˜ëŠ” ì½œë°± í•¨ìˆ˜.
 LRESULT CALLBACK WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam)
 {
-    // ¸Ş½ÃÁö Ã³¸®
+    // ë©”ì‹œì§€ ì²˜ë¦¬
     switch (message)
     {
-    // Ã¢ÀÌ »èÁ¦µÇ¸é ½ÇÇàµÊ.
+    // ì°½ì´ ì‚­ì œë˜ë©´ ì‹¤í–‰ë¨.
     case WM_DESTROY:
-        // ÀÌ‹š ÇÁ·Î±×·¥ Á¾·á ¸Ş½ÃÁö¸¦ ¹ß»ı
+        // ì´ë–„ í”„ë¡œê·¸ë¨ ì¢…ë£Œ ë©”ì‹œì§€ë¥¼ ë°œìƒ
         PostQuitMessage(0);
         return 0;
 
-    // Ã¢ÀÇ Å©±â°¡ º¯°æµÇ¸é ½ÇÇà
+    // ì°½ì˜ í¬ê¸°ê°€ ë³€ê²½ë˜ë©´ ì‹¤í–‰
     case WM_SIZE:
 
         int width = LOWORD(lparam);
@@ -26,27 +26,27 @@ LRESULT CALLBACK WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lpa
 
         return 0;
     }
-    // ±âº» ¸Ş½ÃÁö Ã³¸®
+    // ê¸°ë³¸ ë©”ì‹œì§€ ì²˜ë¦¬
     return DefWindowProc(handle, message, wparam, lparam);
 }
 
 using namespace GE;
 
 /*
-// Ã¢ ¸ğµå ÇÒ¶§ ¸Ş½ÃÁö Ã³¸®
+// ì°½ ëª¨ë“œ í• ë•Œ ë©”ì‹œì§€ ì²˜ë¦¬
 int WINAPI WinMain(
-    // ¿É¼Ç Ã³¸®ÇÏ´Â °ªÀÓ _IN_ ÀÌ·±°Å
-    // Handle Instance : ±¸Á¶Ã¼ÀÓ 
+    // ì˜µì…˜ ì²˜ë¦¬í•˜ëŠ” ê°’ì„ _IN_ ì´ëŸ°ê±°
+    // Handle Instance : êµ¬ì¡°ì²´ì„ 
     _In_ HINSTANCE hInstance,
-    // Window 3.1 ¹öÀü È£È¯Àº À§ÇÑ °Í
+    // Window 3.1 ë²„ì „ í˜¸í™˜ì€ ìœ„í•œ ê²ƒ
     _In_opt_ HINSTANCE hPrevInstance,
-    // ÆÄ¶ó¹ÌÅÍ ¿É¼Ç
+    // íŒŒë¼ë¯¸í„° ì˜µì…˜
     _In_ LPSTR lpCmdLine,
-    // ¿É¼Ç°ª
+    // ì˜µì…˜ê°’
     _In_ int nShowCmd
 )
 {
-    // ¿£Áø »ı¼º ¹× ½ÇÇà
+    // ì—”ì§„ ìƒì„± ë° ì‹¤í–‰
     Engine engine(1280, 800, TEXT("ENGINE DEMO"), hInstance);
 
     engine.Run();
@@ -72,7 +72,7 @@ int main()
     //TestClass<Engine>();
     //ThrowIfFailed(E_FAIL, TEXT("Text Error"))
     //Texture texture("T_coord.png");
-    // ¿£Áø »ı¼º ¹× ½ÇÇà
+    // ì—”ì§„ ìƒì„± ë° ì‹¤í–‰
     Engine engine(1280, 800, TEXT("ENGINE DEMO"), GetModuleHandle(nullptr));
     engine.SetLevle(std::make_shared<DemoLevel>());
     engine.Run();

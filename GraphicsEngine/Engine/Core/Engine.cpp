@@ -1,9 +1,10 @@
-#include "Engine.h"
+ï»¿#include "Engine.h"
 #include "Window.h"
 #include "../Render/Renderer.h"
 #include "Resource/ShaderLoader.h"
 #include "Resource/TextureLoader.h"
 #include "Resource/ModelLoader.h"
+#include "InputController.h"
 
 #include "Level/Level.h"
 
@@ -11,27 +12,30 @@
 
 namespace GE
 {
-	// ½Ì±ÛÅæ °´Ã¼ ¼³Á¤
+	// ì‹±ê¸€í†¤ ê°ì²´ ì„¤ì •
 	Engine* Engine::instance = nullptr;
 
 	Engine::Engine(uint32 width, uint32 height, const std::wstring& title, HINSTANCE hInstance)
 	{
-		// ½Ì±ÛÅæ °´Ã¼ °ª ¼³Á¤
+		// ì‹±ê¸€í†¤ ê°ì²´ ê°’ ì„¤ì •
 		instance = this;
 
-		// Ã¢ °´Ã¼ »ı¼º
+		// ì¸í’‹ ì»¨íŠ¸ë¡¤ëŸ¬ ê°ì²´ ìƒì„±
+		inputController = std::make_unique<InputController>();
+
+		// ì°½ ê°ì²´ ìƒì„±
 		window = std::make_shared<Window>(width, height, title, hInstance, WindowProc);
 
-		// ¼ÎÀÌ´õ ·Î´õ °´Ã¼ »ı¼º
+		// ì…°ì´ë” ë¡œë” ê°ì²´ ìƒì„±
 		shaderLoader = std::make_unique<ShaderLoader>();
 
-		// ÅØ½ºÃ³ ·Î´õ °´Ã¼ »ı¼º
+		// í…ìŠ¤ì²˜ ë¡œë” ê°ì²´ ìƒì„±
 		textureLoader = std::make_unique<TextureLoader>();
 
-		// ¸ğµ¨ ·Î´õ °´Ã¼ »ı¼º
+		// ëª¨ë¸ ë¡œë” ê°ì²´ ìƒì„±
 		modelLoader = std::make_unique<ModelLoader>();
 
-		// ·£´õ·¯ »ı¼º
+		// ëœë”ëŸ¬ ìƒì„±
 		renderer = std::make_shared<Renderer>(width, height, window->Handle());
 	}
 
@@ -40,58 +44,68 @@ namespace GE
 	}
 	void Engine::Run()
 	{
-		// Å¸ÀÌ¸Ó.
+		// íƒ€ì´ë¨¸.
 		LARGE_INTEGER currentTime;
 		LARGE_INTEGER previousTime;
 		LARGE_INTEGER frequency;
 
-		// ÇÏµå¿ş¾î Å¸ÀÌ¸ÓÀÇ ÇØ»óµµ °ª(±âÁØ ´ÜÀ§)
+		// í•˜ë“œì›¨ì–´ íƒ€ì´ë¨¸ì˜ í•´ìƒë„ ê°’(ê¸°ì¤€ ë‹¨ìœ„)
 		QueryPerformanceFrequency(&frequency);
 
-		// ÇöÀç ½Ã°£
+		// í˜„ì¬ ì‹œê°„
 		QueryPerformanceCounter(&currentTime);
 		previousTime = currentTime;
 
-		// ÇÁ·¹ÀÓ °è»ê¿¡ »ç¿ëÇÒ º¯¼ö
+		// í”„ë ˆì„ ê³„ì‚°ì— ì‚¬ìš©í•  ë³€ìˆ˜
 		float targetFrameRate = 120.0f;
-		// °íÁ¤ ÇÁ·¹ÀÓ ¼Óµµ¸¦ »ç¿ëÇÏ±â À§ÇÑ º®¼ö
+		// ê³ ì • í”„ë ˆì„ ì†ë„ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•œ ë²½ìˆ˜
 		float oneFrameTime = 1.0f / targetFrameRate;
 
 
 
-		// ¸Ş½ÃÁö Ã³¸® ·çÇÁ
+		// ë©”ì‹œì§€ ì²˜ë¦¬ ë£¨í”„
 		MSG msg = { };
-		// PeekMessage ÀÔ·Â ¹ŞÀ¸¸é true °ªÀ» ¹İÈ¯ ÇÏ°í ¾Æ´Ï¸é false°ªÀ» ¹İÈ¯ÇØ¼­ °è¼Ó µ¹±â À§ÇÑ°Å
-		// GetMessage »ç¿ë ¾ÈÇÏ´Â ÀÌÀ¯ : ¸Ş½ÃÁö°¡ µé¾î¿Ã¶§±îÁö ´ë±âÇØ¼­ engine¿¡´Â ºÎÀûÇÕÇÔ
+		// PeekMessage ì…ë ¥ ë°›ìœ¼ë©´ true ê°’ì„ ë°˜í™˜ í•˜ê³  ì•„ë‹ˆë©´ falseê°’ì„ ë°˜í™˜í•´ì„œ ê³„ì† ëŒê¸° ìœ„í•œê±°
+		// GetMessage ì‚¬ìš© ì•ˆí•˜ëŠ” ì´ìœ  : ë©”ì‹œì§€ê°€ ë“¤ì–´ì˜¬ë•Œê¹Œì§€ ëŒ€ê¸°í•´ì„œ engineì—ëŠ” ë¶€ì í•©í•¨
 		while (msg.message != WM_QUIT) // WM_QUIT WM_DESTROY
 		{
-			// Ã¢¿¡ ¸Ş½ÃÁö°¡ µé¾î¿Ã¶§ ½ÇÇà
+			// ì—¦ë‹ˆ ì¢…ë£Œ ì²˜ë¦¬
+			if (isQuit)
+			{
+				break;
+			}
+			// ì°½ì— ë©”ì‹œì§€ê°€ ë“¤ì–´ì˜¬ë•Œ ì‹¤í–‰
 			if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 			{
-				// ¸Ş½ÃÁö ¹ø¿ª
+				// ë©”ì‹œì§€ ë²ˆì—­
 				TranslateMessage(&msg);
 
-				// ¸Ş½ÃÁö Àü´Ş
+				// ë©”ì‹œì§€ ì „ë‹¬
 				DispatchMessage(&msg);
 			}
 
-			// Ã¢¿¡ ¸Ş½ÃÁö°¡ ¾øÀ¸¸é ´Ù¸¥ ÀÛ¾÷ Ã³¸®
+			// ì°½ì— ë©”ì‹œì§€ê°€ ì—†ìœ¼ë©´ ë‹¤ë¥¸ ì‘ì—… ì²˜ë¦¬
 			else
 			{
-				// ÇöÀç ½Ã°£ °¡Á®¿À±â
+				// í˜„ì¬ ì‹œê°„ ê°€ì ¸ì˜¤ê¸°
 				QueryPerformanceCounter(&currentTime);
 
-				// ÇÁ·¹ÀÓ ½Ã°£ °è»ê
+				// í”„ë ˆì„ ì‹œê°„ ê³„ì‚°
 				float deltaTime = (float)(currentTime.QuadPart - previousTime.QuadPart) / (float)frequency.QuadPart;
 
-				// ÇÁ·¹ÀÓ Á¦ÇÑ
+				// í”„ë ˆì„ ì œí•œ
 				if (deltaTime >= oneFrameTime)
 				{
-					// Ãâ·Â
-					std::cout << "DetlaTime : " << deltaTime << " | OneFrameTime : " << oneFrameTime << " | FPS : " << (int)ceil(1.0f / deltaTime) << "\n";
+					// ì¶œë ¥
+					std::cout << "DeltaTime : " << deltaTime << " | OneFrameTime : " << oneFrameTime << " | FPS : " << (int)ceil(1.0f / deltaTime) << "\n";
 
-					// ¿£Áø ·çÇÁ.
-				// ·¹º§ Ã³¸®
+					// ì°½ ì œëª©ì— ì¶œë ¥ì„ ìœ„í•œ ë¬¸ìì—´ ìƒì„±
+					wchar_t stat[512] = {};
+					swprintf_s(stat, 512, TEXT("[%s] - [DeltaTime: %f] [FPS : %d]"), window->Title().c_str(), deltaTime, static_cast<int>(ceil(1.0f / deltaTime)));
+					// ì°½ ì œëª©ì— ì¶œë ¥
+					SetWindowText(window->Handle(), stat);
+					// ì—”ì§„ ë£¨í”„.
+				// ë ˆë²¨ ì²˜ë¦¬
 					if (mainLevel)
 					{
 						mainLevel->BeginPlay();
@@ -99,8 +113,11 @@ namespace GE
 						renderer->Draw(mainLevel);
 					}
 
-					// ÇÁ·¹ÀÓ ½Ã°£ ¾÷µ¥ÀÌÆ®
+					// í”„ë ˆì„ ì‹œê°„ ì—…ë°ì´íŠ¸
 					previousTime = currentTime;
+
+					// ì…ë ¥ ì´ˆê¸°í™”
+					inputController->ResetInputs();
 				}
 
 				
@@ -110,30 +127,112 @@ namespace GE
 
 	void Engine::SetLevle(std::shared_ptr<Level> newLevel)
 	{
-		// ¸ŞÀÎ ·¹º§ ¼³Á¤
+		// ë©”ì¸ ë ˆë²¨ ì„¤ì •
 		mainLevel = newLevel;
 	}
 
 	LRESULT Engine::WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam)
 	{
-		// ¸Ş½ÃÁö Ã³¸®
+		// ì…ë ¥ ê´€ë¦¬ìê°€ ì¤€ë¹„ ì•ˆëìœ¼ë©´ ì¢…ë£Œ
+		if (!InputController::Get().IsValid())
+		{
+			return DefWindowProc(handle, message, wparam, lparam);
+		}
+
+		// ë©”ì‹œì§€ ì²˜ë¦¬
 		switch (message)
 		{
-			// Ã¢ÀÌ »èÁ¦µÇ¸é ½ÇÇàµÊ.
+			// ì°½ì´ ì‚­ì œë˜ë©´ ì‹¤í–‰ë¨.
 		case WM_DESTROY:
-			// ÀÌ‹š ÇÁ·Î±×·¥ Á¾·á ¸Ş½ÃÁö¸¦ ¹ß»ı
-			PostQuitMessage(0);
-			return 0;
+			// ì´ë–„ í”„ë¡œê·¸ë¨ ì¢…ë£Œ ë©”ì‹œì§€ë¥¼ ë°œìƒ
+			//PostQuitMessage(0);
 
-			// Ã¢ÀÇ Å©±â°¡ º¯°æµÇ¸é ½ÇÇà
-		case WM_SIZE:
+			Engine::Get().Quit();
+			break;
 
-			int width = LOWORD(lparam);
-			int height = HIWORD(lparam);
-
-			return 0;
+		case WM_LBUTTONDOWN:
+		{
+			InputController::Get().SetButtonUpDown(0, false, true);
 		}
-		// ±âº» ¸Ş½ÃÁö Ã³¸®
+		break;
+
+		case WM_LBUTTONUP:
+		{
+			InputController::Get().SetButtonUpDown(0, true, false);
+		}
+		break;
+
+		case WM_RBUTTONDOWN:
+		{
+			InputController::Get().SetButtonUpDown(1, false, true);
+		break;
+		}
+
+		case WM_RBUTTONUP:
+		{
+			InputController::Get().SetButtonUpDown(1, true, false);
+		}
+		break;
+
+		case WM_MBUTTONDOWN:
+		{
+			InputController::Get().SetButtonUpDown(2, false, true);
+		}
+		break;
+
+		case WM_MBUTTONUP:
+		{
+			InputController::Get().SetButtonUpDown(2, true, false);
+		}
+		break;
+
+		case WM_MOUSEMOVE:
+		{
+			// í˜„ì¬ ë§ˆìš°ìŠ¤ ìœ„ì¹˜ê°’ ë°›ì•„ì˜¤ê¸°
+			int xPosition = LOWORD(lparam);
+			int yPosition = HIWORD(lparam);
+
+			InputController::Get().SetMousePosition(xPosition, yPosition);
+		}
+		break;
+
+		case WM_SIZE:
+		{
+			if (wparam == SIZE_MINIMIZED)
+			{
+				break;
+			}
+
+			uint32 width = static_cast<uint32>(LOWORD(lparam));
+			uint32 height = static_cast<uint32>(HIWORD(lparam));
+
+			// ê°€ë¡œ / ì„¸ë¡œ í¬ê¸° ê°’ ì „ë‹¬.
+			Engine::Get().OnResize(width, height);
+		}
+		break;
+
+		case WM_SYSKEYDOWN:
+		case WM_SYSKEYUP:
+		case WM_KEYDOWN:
+		case WM_KEYUP:
+		{
+			// MSDN ë¬¸ì„œë¥¼ í™•ì¸í•´ ë³´ë©´, 30ë²ˆì§¸ ë¹„íŠ¸ëŠ” KeyUp ìƒíƒœë¥¼ ë‚˜íƒ€ë‚¸ë‹¤ê³  ë‚˜ì˜´.
+			bool isKeyUp = ((lparam & (static_cast<long long>(1) << 30)) != 0);
+
+			// MSDN ë¬¸ì„œë¥¼ í™•ì¸í•´ ë³´ë©´, 31ë²ˆì§¸ ë¹„íŠ¸ëŠ” KeyDown ìƒíƒœë¥¼ ë‚˜íƒ€ë‚¸ë‹¤ê³  ë‚˜ì˜´.
+			bool isKeyDown = ((lparam & (static_cast<long long>(1) << 31)) == 0);
+
+			// ì—”ì§„ì— í‚¤ ì…ë ¥ ë°ì´í„° ì „ë‹¬.
+			if (isKeyUp != isKeyDown)
+			{
+				// ê°€ìƒ í‚¤ ê°’.
+				uint32 vkCode = static_cast<uint32>(wparam);
+				InputController::Get().SetKeyUpDown(vkCode, isKeyUp, isKeyDown);
+			}
+		} 
+		break;
+		}	
+		// ê¸°ë³¸ ë©”ì‹œì§€ ì²˜ë¦¬
 		return DefWindowProc(handle, message, wparam, lparam);
 	}
 
@@ -150,5 +249,34 @@ namespace GE
 	ID3D11DeviceContext& Engine::Context() const
 	{
 		return *renderer->context;
+	}
+
+	// ê²Œì„ ìµœì í™” í• ë•Œ í¬ê¸° ì œí•œí•´ ë‘ëŠ” ê²ƒë„ ìˆìŒ
+	void Engine::OnResize(uint32 width, uint32 height)
+	{
+		if (!window)
+		{
+			return;
+		}
+
+		if (!renderer)
+		{
+			return;
+		}
+
+		// ìœˆë„ìš° í´ë˜ìŠ¤ì˜ í¬ê¸° ì¡°ì •
+		window->SetWidthHeight(width, height);
+
+		RECT rect;
+		GetClientRect(window->Handle(), &rect);
+
+		uint32 w = static_cast<uint32>(rect.right - rect.left);
+		uint32 h = static_cast<uint32>(rect.bottom - rect.top);
+
+		renderer->OnResize(w, h);
+	}
+	void Engine::Quit()
+	{
+		isQuit = true;
 	}
 }

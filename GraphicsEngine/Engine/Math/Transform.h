@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Vector3.h"
 #include "Matrix4.h"
@@ -6,7 +6,7 @@
 
 namespace GE
 {
-	// Æ®·£½ºÆû(º¯È¯) Á¤º¸¸¦ Á¦°øÇÏ´Â Å¬·¡½º
+	// íŠ¸ëœìŠ¤í¼(ë³€í™˜) ì •ë³´ë¥¼ ì œê³µí•˜ëŠ” í´ë˜ìŠ¤
 	class Transform
 	{
 	public:
@@ -17,7 +17,7 @@ namespace GE
 		void Bind();
 
 	public:
-		// Æ®·£½ºÆû(º¯È¯) ¿ä¼Ò(TRS)
+		// íŠ¸ëœìŠ¤í¼(ë³€í™˜) ìš”ì†Œ(TRS)
 		Vector3 position = Vector3::Zero;
 		Vector3 rotation = Vector3::Zero;
 		Vector3 scale = Vector3::One;
@@ -25,7 +25,7 @@ namespace GE
 	private:
 		Matrix4 transformMatrix;
 
-		// »ó¼ö ¹öÆÛ
+		// ìƒìˆ˜ ë²„í¼
 		ID3D11Buffer* constantBuffer = nullptr;
 	};
 }

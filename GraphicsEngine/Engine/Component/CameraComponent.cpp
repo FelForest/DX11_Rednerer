@@ -1,33 +1,35 @@
-#include "CameraComponent.h"
+ï»¿#include "CameraComponent.h"
 #include "Core/Engine.h"
 #include "Core/Common.h"
 #include "Math/Matrix4.h"
 #include "Actor/Actor.h"
+#include "Core/InputController.h"
+
 
 namespace GE
 {
 	CameraComponent::CameraComponent()
 	{
-		// ºäÇà·Ä ¾÷µ¥ÀÌÆ® ¹× ¹ÙÀÎµù.
+		// ë·°í–‰ë ¬ ì—…ë°ì´íŠ¸ ë° ë°”ì¸ë”©.
 		/*data.viewMatrix
 			= Matrix4::Translation(owner->transform.position * -1.0f)
 			* Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));*/
 
-		// Çà·Ä ÀüÄ¡.
+		// í–‰ë ¬ ì „ì¹˜.
 		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
 
-		// µ¥ÀÌÅÍ ´ã¾Æ¼­ ¹öÆÛ »ı¼º.
+		// ë°ì´í„° ë‹´ì•„ì„œ ë²„í¼ ìƒì„±.
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = sizeof(CameraBuffer);
 		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-		// ¹öÆÛ µ¥ÀÌÅÍ.
+		// ë²„í¼ ë°ì´í„°.
 		D3D11_SUBRESOURCE_DATA bufferData = {};
 		bufferData.pSysMem = &data;
 
-		// ¹öÆÛ »ı¼º.
+		// ë²„í¼ ìƒì„±.
 		ID3D11Device& device = Engine::Get().Device();
 		ThrowIfFailed(
 			device.CreateBuffer(&bufferDesc, &bufferData, &cameraBuffer),
@@ -38,11 +40,54 @@ namespace GE
 	{
 	}
 
+	void CameraComponent::Tick(float deltaTime)
+	{
+		Component::Tick(deltaTime);
+
+		// ì…ë ¥ ê´€ë¦¬ì í¬ì¸í„° ì €ì¥
+		static InputController& input = InputController::Get();
+		// ì…ë ¥ í…ŒìŠ¤íŠ¸
+		if (InputController::Get().IsKeyDown(VK_ESCAPE))
+		{
+			// íŒì—…ì°½ ë„ìœ„ê¸°
+			if (MessageBox(nullptr, TEXT("Want to Quit?"), TEXT("Quit Engine"), MB_YESNO) == IDYES)
+			{
+				Engine::Get().Quit();
+			}
+		}
+
+		// ì¹´ë©”ë¼ ì´ë™ ì²˜ë¦¬
+
+		// ì™¼ìª½ ì´ë™
+		if (input.IsKey('A') || input.IsKey(VK_LEFT))
+		{
+			owner->transform.position.x -= 1.0f * deltaTime;
+		}
+
+		// ì˜¤ë¥¸ìª½ ì´ë™
+		if (input.IsKey('D') || input.IsKey(VK_RIGHT))
+		{
+			owner->transform.position.x += 1.0f * deltaTime;
+		}
+
+		// ìœ„ìª½ ì´ë™
+		if (input.IsKey('W') || input.IsKey(VK_UP))
+		{
+			owner->transform.position.y += 1.0f * deltaTime;
+		}
+
+		// ì•„ë˜ìª½ ì´ë™
+		if (input.IsKey('S') || input.IsKey(VK_DOWN))
+		{
+			owner->transform.position.y -= 1.0f * deltaTime;
+		}
+	}
+
 	void CameraComponent::Draw()
 	{
 		Component::Draw();
 
-		// ºä Çà·Ä ¾÷µ¥ÀÌÆ® ¹× ¹ÙÀÎµù
+		// ë·° í–‰ë ¬ ì—…ë°ì´íŠ¸ ë° ë°”ì¸ë”©
 		data.viewMatrix =
 			Matrix4::Translation(owner->transform.position * (-1.0f)) *
 			Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
@@ -51,25 +96,25 @@ namespace GE
 		//
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		// ÀüÄ¡ Çà·Ä (CPU¿Í GPU°¡ Çà·ÄÀ» ´Ù·ç´Â ¹æ½ÄÀÌ ´Ş¶ó¼­).
-		// Çà±âÁØ Çà·ÄÀ» ¿­ ±âÁØ Çà·Ä·Î º¯È¯ÇÏ±â À§ÇØ ÀüÄ¡Çà·Ä Ã³¸® -> ÀÌ°Ô GPU°¡ ÁÁ¾ÆÇÏ´Â ¹æ½Ä
+		// ì „ì¹˜ í–‰ë ¬ (CPUì™€ GPUê°€ í–‰ë ¬ì„ ë‹¤ë£¨ëŠ” ë°©ì‹ì´ ë‹¬ë¼ì„œ).
+		// í–‰ê¸°ì¤€ í–‰ë ¬ì„ ì—´ ê¸°ì¤€ í–‰ë ¬ë¡œ ë³€í™˜í•˜ê¸° ìœ„í•´ ì „ì¹˜í–‰ë ¬ ì²˜ë¦¬ -> ì´ê²Œ GPUê°€ ì¢‹ì•„í•˜ëŠ” ë°©ì‹
 
 		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
 
-		// ¹öÆÛ ¾÷µ¥ÀÌÆ®
+		// ë²„í¼ ì—…ë°ì´íŠ¸
 		D3D11_MAPPED_SUBRESOURCE resource = {};
 
-		// CPU°¡ µ¥ÀÌÅÍ ÀÛ¼ºÁß¿¡´Â GPU¿¡°Ô ÀĞÁö¸»¶ó°í ¶ôÀ» °ÉÀ½
+		// CPUê°€ ë°ì´í„° ì‘ì„±ì¤‘ì—ëŠ” GPUì—ê²Œ ì½ì§€ë§ë¼ê³  ë½ì„ ê±¸ìŒ
 		context.Map(cameraBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
 
 		//resource.pData = &transformMatrix;
-		// º¹»ç
+		// ë³µì‚¬
 		memcpy(resource.pData, &data, sizeof(CameraBuffer));
-		// ¶ô Ç®±â
+		// ë½ í’€ê¸°
 		context.Unmap(cameraBuffer, 0);
 
-		// ¹öÆÛ ¹ÙÀÎµù
-		// ¾î¶² ½½·ÔÀ» »ç¿ëÇÒ°ÇÁö ¾Ë·ÁÁÖ´Â°Í
+		// ë²„í¼ ë°”ì¸ë”©
+		// ì–´ë–¤ ìŠ¬ë¡¯ì„ ì‚¬ìš©í• ê±´ì§€ ì•Œë ¤ì£¼ëŠ”ê²ƒ
 		context.VSSetConstantBuffers(1, 1, &cameraBuffer);
 	}
 }

@@ -1,4 +1,4 @@
-#include "Shader.h"
+ï»¿#include "Shader.h"
 #include <d3dcompiler.h>
 #include "../Core/Engine.h"
 
@@ -8,15 +8,15 @@ namespace GE
 		: name(name)
 	{
 
-		// °æ·Î Ãß°¡
+		// ê²½ë¡œ ì¶”ê°€
 		wchar_t path[256];
 		swprintf_s(path, 256, L"../CompiledShader/%sVertexShader.cso", name.c_str());
 
-		//  ¹öÅØ½º ½¦ÀÌ´õ ÄÄÆÄÀÏ
+		//  ë²„í…ìŠ¤ ì‰ì´ë” ì»´íŒŒì¼
 		//auto result = D3DCompileFromFile(
 		//	path,
 		//	nullptr, 
-		//	/*½¦ÀÌ´õ ¾È¿¡ ´Ù¸¥ ÆÄÀÏ Æ÷ÇÔ½ÃÅ°´Â°Å ¼³Á¤°ª */nullptr, 
+		//	/*ì‰ì´ë” ì•ˆì— ë‹¤ë¥¸ íŒŒì¼ í¬í•¨ì‹œí‚¤ëŠ”ê±° ì„¤ì •ê°’ */nullptr, 
 		//	"main", 
 		//	"vs_5_0", 
 		//	0, 
@@ -30,10 +30,10 @@ namespace GE
 		//	__debugbreak();
 		//}
 
-		// ÀåÄ¡ °´Ã¼ ¾ò¾î¿À±â
+		// ì¥ì¹˜ ê°ì²´ ì–»ì–´ì˜¤ê¸°
 		auto& device = Engine::Get().Device();
 
-		// ¹öÅØ½º CSO ·Îµå
+		// ë²„í…ìŠ¤ CSO ë¡œë“œ
 		auto result = D3DReadFileToBlob(path, &vertexShaderBuffer);
 		if (FAILED(result))
 		{
@@ -41,7 +41,7 @@ namespace GE
 			__debugbreak();
 		}
 
-		// ¹öÅØ½º ½¦ÀÌ´õ »ı¼º
+		// ë²„í…ìŠ¤ ì‰ì´ë” ìƒì„±
 		result = device.CreateVertexShader(
 			vertexShaderBuffer->GetBufferPointer(), 
 			vertexShaderBuffer->GetBufferSize(), 
@@ -54,8 +54,8 @@ namespace GE
 			__debugbreak();
 		}
 
-		// ÀÔ·Â ·¹ÀÌ¾Æ¿ô
-		// Á¤Á¡ ½¦ÀÌ´õ¿¡ Àü´ŞÇÒ Á¤Á¡ µ¥ÀÌÅÍ°¡ ¾î¶»°Ô »ı°å´ÂÁö ¾Ë·ÁÁÜ
+		// ì…ë ¥ ë ˆì´ì•„ì›ƒ
+		// ì •ì  ì‰ì´ë”ì— ì „ë‹¬í•  ì •ì  ë°ì´í„°ê°€ ì–´ë–»ê²Œ ìƒê²¼ëŠ”ì§€ ì•Œë ¤ì¤Œ
 		/*
 		LPCSTR SemanticName;
 		UINT SemanticIndex;
@@ -97,7 +97,7 @@ namespace GE
 
 
 		};
-		// DX¿¡ ¸®ÇÃ·º¼Ç ÇÏ´Â°Ô ÀÖÀ½
+		// DXì— ë¦¬í”Œë ‰ì…˜ í•˜ëŠ”ê²Œ ìˆìŒ
 		result = device.CreateInputLayout(
 			inputDesc,
 			_countof(inputDesc),
@@ -111,10 +111,10 @@ namespace GE
 			__debugbreak();
 		}
 
-		// ÇÈ¼¿ ½¦ÀÌ´õ ÄÄÆÄÀÏ/»ı¼º
-		// °¢ ¸®¼Ò½º ¹ÙÀÎµù.
+		// í”½ì…€ ì‰ì´ë” ì»´íŒŒì¼/ìƒì„±
+		// ê° ë¦¬ì†ŒìŠ¤ ë°”ì¸ë”©.
 
-		// ÇÈ¼¿ CSO ·Îµå
+		// í”½ì…€ CSO ë¡œë“œ
 		swprintf_s(path, 256, L"../CompiledShader/%sPixelShader.cso", name.c_str());
 
 		result = D3DReadFileToBlob(path, &pixelShaderBuffer);
@@ -124,11 +124,11 @@ namespace GE
 			MessageBox(nullptr, TEXT("Failed to read pixel shader object. "), TEXT("Error"), MB_OK);
 			__debugbreak();
 		}
-		// ÇÈ¼¿ ½¦ÀÌ´õ ÄÄÆÄÀÏ
+		// í”½ì…€ ì‰ì´ë” ì»´íŒŒì¼
 		//ID3DBlob* pixelShaderBuffer = nullptr;
 		//result = D3DCompileFromFile(path, 
 		//	nullptr, 
-		//	/*½¦ÀÌ´õ ¾È¿¡ ´Ù¸¥ ÆÄÀÏ Æ÷ÇÔ½ÃÅ°´Â°Å ¼³Á¤°ª */nullptr, 
+		//	/*ì‰ì´ë” ì•ˆì— ë‹¤ë¥¸ íŒŒì¼ í¬í•¨ì‹œí‚¤ëŠ”ê±° ì„¤ì •ê°’ */nullptr, 
 		//	"main", 
 		//	"ps_5_0", 
 		//	0, 
@@ -142,7 +142,7 @@ namespace GE
 		//	__debugbreak();
 		//}
 
-		// ¹öÅØ½º ½¦ÀÌ´õ »ı¼º
+		// ë²„í…ìŠ¤ ì‰ì´ë” ìƒì„±
 		result = device.CreatePixelShader(
 			pixelShaderBuffer->GetBufferPointer(), 
 			pixelShaderBuffer->GetBufferSize(), 
@@ -157,7 +157,7 @@ namespace GE
 	}
 	Shader::~Shader()
 	{
-		// DX ¸®¼Ò½º ÇØÁ¦
+		// DX ë¦¬ì†ŒìŠ¤ í•´ì œ
 		if (inputlayout)
 		{
 			inputlayout->Release();
@@ -186,15 +186,15 @@ namespace GE
 
 	void Shader::Bind()
 	{
-		// ÀåÄ¡ ¹®¸Æ(DeviceContext) ¾ò¾î¿À±â
+		// ì¥ì¹˜ ë¬¸ë§¥(DeviceContext) ì–»ì–´ì˜¤ê¸°
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		// ÀÔ·Â ·¹ÀÌ¾Æ¿ô Àü´Ş
+		// ì…ë ¥ ë ˆì´ì•„ì›ƒ ì „ë‹¬
 		context.IASetInputLayout(inputlayout);
-		// Á¶¸³ÇÒ ¸ğ¾ç ¼³Á¤
+		// ì¡°ë¦½í•  ëª¨ì–‘ ì„¤ì •
 		context.IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		// ½¦ÀÌ´õ ¼³Á¤
+		// ì‰ì´ë” ì„¤ì •
 		context.VSSetShader(vertexShader, nullptr, 0);
 		context.PSSetShader(pixelShader, nullptr, 0);
 	}

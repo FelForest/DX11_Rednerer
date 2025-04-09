@@ -1,4 +1,4 @@
-#include "Texture.h"
+ï»¿#include "Texture.h"
 #include "Core/Engine.h"
 #include <iostream>
 #define STB_IMAGE_IMPLEMENTATION
@@ -22,16 +22,16 @@ namespace GE
 
     void Texture::Bind()
     {
-        // ¿¹¿Ü Ã³¸®.
+        // ì˜ˆì™¸ ì²˜ë¦¬.
         if (!textureData)
         {
             return;
         }
 
-        // ÄÁÅØ½ºÆ® ¾ò±â.
+        // ì»¨í…ìŠ¤íŠ¸ ì–»ê¸°.
         static ID3D11DeviceContext& context = Engine::Get().Context();
 
-        // ¹ÙÀÎµù.
+        // ë°”ì¸ë”©.
         if (bindType == BindType::VertexShader)
         {
             context.VSSetShaderResources(index, 1, &textureData->shaderResourceView);
@@ -46,28 +46,28 @@ namespace GE
 
 	void Texture::LoadTexture(const std::string& name)
 	{
-        // ÀÌ¹ÌÁö ·Îµå.
-        // °æ·Î ¼³Á¤.
+        // ì´ë¯¸ì§€ ë¡œë“œ.
+        // ê²½ë¡œ ì„¤ì •.
         char path[256] = {};
         sprintf_s(path, 256, "../Assets/Textures/%s", name.c_str());
 
-        // °´Ã¼ »ı¼º.
+        // ê°ì²´ ìƒì„±.
         textureData = std::make_unique<TextureData>();
 
-        // ÀÌ¹ÌÁö ÆÄÀÏ ·Îµå.
+        // ì´ë¯¸ì§€ íŒŒì¼ ë¡œë“œ.
         textureData->data = stbi_load(path, &textureData->width, &textureData->height, &textureData->channelCount, 0);
 
-        // ¿¹¿ÜÃ³¸®
+        // ì˜ˆì™¸ì²˜ë¦¬
         if (!textureData->data)
         {
             std::cout << "Error: Fail to load texture file: " << name << " \n";
             __debugbreak();
         }
 
-        // DX ¸®¼Ò½º »ı¼º
-        // ÀåÄ¡
-        // ÀÌ·¸°Ô ¹Ş¾Æ¿À´Â°Å º°·Î ¾ÈÁÁ¾ÆÇÔ ±×³É Àü¿ªÀ¸·Î ³ÀµÎ´Â °æ¿ì°¡ ¸¹À½
-        // ÀÌ ±¸Çö¿¡¼­´Â ¿£Áø¿¡ ´Ù ³Ö¾î ³ö¼­ »ó°ü ¾øÀ½
+        // DX ë¦¬ì†ŒìŠ¤ ìƒì„±
+        // ì¥ì¹˜
+        // ì´ë ‡ê²Œ ë°›ì•„ì˜¤ëŠ”ê±° ë³„ë¡œ ì•ˆì¢‹ì•„í•¨ ê·¸ëƒ¥ ì „ì—­ìœ¼ë¡œ ëƒ…ë‘ëŠ” ê²½ìš°ê°€ ë§ìŒ
+        // ì´ êµ¬í˜„ì—ì„œëŠ” ì—”ì§„ì— ë‹¤ ë„£ì–´ ë†”ì„œ ìƒê´€ ì—†ìŒ
         static ID3D11Device& device = Engine::Get().Device();
 
         D3D11_TEXTURE2D_DESC textureDesc = {};
@@ -92,7 +92,7 @@ namespace GE
             __debugbreak();
         }
 
-        // ¼ÎÀÌ´õ ¸®¼Ò½º ºä »ı¼º(¼ÎÀÌ´õ¿¡ ¹ÙÀÎµùÇÒ ¸®¼Ò½º)
+        // ì…°ì´ë” ë¦¬ì†ŒìŠ¤ ë·° ìƒì„±(ì…°ì´ë”ì— ë°”ì¸ë”©í•  ë¦¬ì†ŒìŠ¤)
         result = device.CreateShaderResourceView(texture, nullptr, &textureData->shaderResourceView);
 
         if (FAILED(result))
@@ -101,7 +101,7 @@ namespace GE
             __debugbreak();
         }
 
-        // ´Ù¾´ ¸®¼Ò½º ÇØÁ¦
+        // ë‹¤ì“´ ë¦¬ì†ŒìŠ¤ í•´ì œ
         if (texture)
         {
             texture->Release();;
@@ -109,10 +109,10 @@ namespace GE
         }
         
         
-        // ¿ø·¡´Â ¸ğµç Å¸ÀÔÀ» ¸¸µé¾î¾ß ÇÏÁö¸¸ ¿©±â¼­´Â ÇÑ°èÁ¡À» ¾Ë°í Á¦ÇÑÇØ¼­ ÀÛ¼ºÇÏ¸é ±¦ÂúÀ»°Å °°À½
+        // ì›ë˜ëŠ” ëª¨ë“  íƒ€ì…ì„ ë§Œë“¤ì–´ì•¼ í•˜ì§€ë§Œ ì—¬ê¸°ì„œëŠ” í•œê³„ì ì„ ì•Œê³  ì œí•œí•´ì„œ ì‘ì„±í•˜ë©´ ê´œì°®ì„ê±° ê°™ìŒ
 
 
-        // »ùÇÃ·¯ µ¥½ºÆ® ³»ºÎ 
+        // ìƒ˜í”ŒëŸ¬ ë°ìŠ¤íŠ¸ ë‚´ë¶€ 
         /*
         D3D11_FILTER Filter;
         D3D11_TEXTURE_ADDRESS_MODE AddressU;
@@ -136,7 +136,7 @@ namespace GE
         sampleDesc.MaxAnisotropy = 3;
         sampleDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 
-        // »ùÇÃ·¯ »ı¼º
+        // ìƒ˜í”ŒëŸ¬ ìƒì„±
         result = device.CreateSamplerState(&sampleDesc, &textureData->samplerState);
 
         if (FAILED(result))

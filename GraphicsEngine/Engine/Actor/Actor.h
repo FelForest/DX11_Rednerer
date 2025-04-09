@@ -1,24 +1,24 @@
-#pragma once
+ï»¿#pragma once
 
-// ÇØ½Ã·Î ÁÖ´Â°Ô ÁÁ±äÇÔ
+// í•´ì‹œë¡œ ì£¼ëŠ”ê²Œ ì¢‹ê¸´í•¨
 #include <string>
 #include <vector>
 #include <memory>
 
-#include "Math/Transform.h" // ¼³°è ½Ã °í·ÁÇÒ »óÇ×
+#include "Math/Transform.h" // ì„¤ê³„ ì‹œ ê³ ë ¤í•  ìƒí•­
 
 namespace GE
 {
 	class Actor
 	{
-		// Get SetÀÌ ¸Â±äÇÑµ¥ ÇÒ°Ô ¸¹¾Æ¼­ ±×³É »ç¿ëÇÔ
+		// Get Setì´ ë§ê¸´í•œë° í• ê²Œ ë§ì•„ì„œ ê·¸ëƒ¥ ì‚¬ìš©í•¨
 		friend class Renderer;
 		friend class Level;
-		// ¼³°è ½Ã °í·Á»çÇ×
-		// ¾ó¸¶³ª ¾×ÅÍ¿¡ ´ãÀ»°ÇÁö - Unity´Â ¾Æ¹«°Íµµ ¾øÀ½, UnrealÀº Á» Å©°Ô º½
-		// UnrealÀº Actor¸¦ ±âÁØÀ¸·Î ¸®ÇÃ¸®ÄÉÀÌ¼ÇÀ» ÇÔ
-		// Unity´Â Component¸¦ ±âÁØÀ¸·Î ¸®ÇÃ¸®ÄÉÀÌ¼Ç ÇÔ 
-		// ÀÌ ±âÁØÀº ³×Æ®¿öÅ© ¼³°è½Ã ¸Å¿ì Áß¿äÇÏ°Ô ÀÛ¿ë
+		// ì„¤ê³„ ì‹œ ê³ ë ¤ì‚¬í•­
+		// ì–¼ë§ˆë‚˜ ì•¡í„°ì— ë‹´ì„ê±´ì§€ - UnityëŠ” ì•„ë¬´ê²ƒë„ ì—†ìŒ, Unrealì€ ì¢€ í¬ê²Œ ë´„
+		// Unrealì€ Actorë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë¦¬í”Œë¦¬ì¼€ì´ì…˜ì„ í•¨
+		// UnityëŠ” Componentë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë¦¬í”Œë¦¬ì¼€ì´ì…˜ í•¨ 
+		// ì´ ê¸°ì¤€ì€ ë„¤íŠ¸ì›Œí¬ ì„¤ê³„ì‹œ ë§¤ìš° ì¤‘ìš”í•˜ê²Œ ì‘ìš©
 	public:
 		Actor();
 		virtual ~Actor();
@@ -29,7 +29,7 @@ namespace GE
 
 		void Destory();
 
-		// ÄÄÆ÷³ÍÆ® Ãß°¡ÇÔ¼ö
+		// ì»´í¬ë„ŒíŠ¸ ì¶”ê°€í•¨ìˆ˜
 		void AddComponent(std::shared_ptr<class Component> newComponent);
 
 		inline const bool IsActive() const { return isActive && !hasDestroyed; }
@@ -37,21 +37,21 @@ namespace GE
 
 
 	public:
-		// ¿¢ÅÍÀÇ TRS Á¤º¸¸¦ °ü¸®ÇÏ´Â Æ®·£½ºÆû
+		// ì—‘í„°ì˜ TRS ì •ë³´ë¥¼ ê´€ë¦¬í•˜ëŠ” íŠ¸ëœìŠ¤í¼
 		Transform transform;
 
 	protected:
-		// ¿¢ÅÍÀÇ ÀÌ¸§ (ÀÏ¹İÀûÀ¸·Î´Â HASH·Î º¯È¯ÇØ¼­ »ç¿ë).
+		// ì—‘í„°ì˜ ì´ë¦„ (ì¼ë°˜ì ìœ¼ë¡œëŠ” HASHë¡œ ë³€í™˜í•´ì„œ ì‚¬ìš©).
 		std::wstring name = TEXT("Actor");
-		// ¾×ÅÍÀÇ ÃÊ±âÈ­ ¿©ºÎ
+		// ì•¡í„°ì˜ ì´ˆê¸°í™” ì—¬ë¶€
 		bool hasInitialized = false;
 
-		// ¾×ÅÍÀÇ È°¼ºÈ­ ¿©ºÎ
+		// ì•¡í„°ì˜ í™œì„±í™” ì—¬ë¶€
 		bool isActive = true;
-		// »èÁ¦ ¿©ºÎ
+		// ì‚­ì œ ì—¬ë¶€
 		bool hasDestroyed = false;
 
-		// ÄÄÆ÷³ÍÆ® ¹è¿­
+		// ì»´í¬ë„ŒíŠ¸ ë°°ì—´
 		std::vector < std::shared_ptr<class Component>> components;
 	};
 }
