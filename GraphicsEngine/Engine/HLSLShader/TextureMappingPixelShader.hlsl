@@ -1,9 +1,12 @@
+#include "Common.hlsli"
+
 struct PixelInput
 {
     float4 position : SV_Position;
     float3 color : COLOR;
     float2 texCoord /*uv*/ : TEXCOORD;
     float3 normal : NORMAL;
+    float3 cameraDirection : TEXCOORD;
 };
 
 // Texture
@@ -23,12 +26,15 @@ float4 main(PixelInput input) : SV_TARGET
     // World Noraml
     float3 worldNormal = normalize(input.normal);
     
-    // Dot
-    float nDotL = saturate(dot(worldNormal, -lightDir));
-
+    // Dot (Labmert cosine Law)
+    //float nDotL = saturate(dot(worldNormal, -lightDir));
+    float nDotL = CalcLambert(worldNormal, lightDir);
     // Half Lambert
     //float dummy = 0.8f;
     //nDotL = pow(nDotL * dummy + (1.0f - dummy), 1.0f);
+
+    // Phong Shader
+    // PBR에서 specul에서 색상이 묻으면 금속 아니면 비금속
     
     //texColor = (1 - texColor);
     float4 finalColor = texColor * nDotL;

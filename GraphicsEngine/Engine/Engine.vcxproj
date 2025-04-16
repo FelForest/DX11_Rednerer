@@ -19,6 +19,7 @@
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\InputController.cpp" />
+    <ClCompile Include="HLSLShader\Common.hlsli" />
     <ClCompile Include="Level\DemoLevel.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Main.cpp" />
