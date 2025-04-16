@@ -8,12 +8,12 @@ namespace GE
         : Shader(L"TextureMapping")
     {
     }
-    TextureMappingShader::TextureMappingShader(const std::string& textureName) 
+    /*TextureMappingShader::TextureMappingShader(const std::string& textureName) 
         : Shader(L"TextureMapping")
     {
         //texture = std::make_unique<Texture>(textureName);
         TextureLoader::Get().Load(textureName, texture);
-    }
+    }*/
     void TextureMappingShader::Bind()
     {
         Shader::Bind();
@@ -22,5 +22,11 @@ namespace GE
         {
             texture.lock()->Bind();
         }
+    }
+
+    void TextureMappingShader::SetTexture(const std::weak_ptr<class Texture>& newTexture)
+    {
+        // 내부 텍스처 값 설정
+        texture = newTexture;
     }
 }

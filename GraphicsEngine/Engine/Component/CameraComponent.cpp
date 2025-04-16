@@ -48,56 +48,6 @@ namespace GE
 	void CameraComponent::Tick(float deltaTime)
 	{
 		Component::Tick(deltaTime);
-
-		// 입력 관리자 포인터 저장
-		static InputController& input = InputController::Get();
-		// 입력 테스트
-		if (InputController::Get().IsKeyDown(VK_ESCAPE))
-		{
-			// 팝업창 띄위기
-			if (MessageBox(nullptr, TEXT("Want to Quit?"), TEXT("Quit Engine"), MB_YESNO) == IDYES)
-			{
-				Engine::Get().Quit();
-			}
-		}
-
-		// 카메라 이동 처리
-
-		// 왼쪽 이동
-		if (input.IsKey('A') || input.IsKey(VK_LEFT))
-		{
-			owner->transform.position.x -= 1.0f * deltaTime;
-		}
-
-		// 오른쪽 이동
-		if (input.IsKey('D') || input.IsKey(VK_RIGHT))
-		{
-			owner->transform.position.x += 1.0f * deltaTime;
-		}
-
-		// 위쪽 이동
-		if (input.IsKey('W') || input.IsKey(VK_UP))
-		{
-			owner->transform.position.z += 1.0f * deltaTime;
-		}
-
-		// 아래쪽 이동
-		if (input.IsKey('S') || input.IsKey(VK_DOWN))
-		{
-			owner->transform.position.z -= 1.0f * deltaTime;
-		}
-
-		// 위쪽 이동
-		if (input.IsKey('Q'))
-		{
-			owner->transform.position.y -= 1.0f * deltaTime;
-		}
-
-		// 아래쪽 이동
-		if (input.IsKey('E'))
-		{
-			owner->transform.position.y = 1.0f * deltaTime;
-		}
 	}
 
 	void CameraComponent::Draw()

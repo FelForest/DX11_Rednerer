@@ -1,5 +1,5 @@
-#pragma once
-// ÀÌ°Ô ¸ÓÅÍ¸®¾óÀÓ
+ï»¿#pragma once
+// ì´ê²Œ ë¨¸í„°ë¦¬ì–¼ì„
 #include <string>
 #include <d3d11.h>
 
@@ -11,7 +11,7 @@ namespace GE
 	public:
 		virtual void Bind() = 0;
 	};
-	// ÀÌ°É Ãß»óÃş ¾²¸é µÊ
+	// ì´ê±¸ ì¶”ìƒì¸µ ì“°ë©´ ë¨
 
 	class Shader
 	{
@@ -19,13 +19,13 @@ namespace GE
 		Shader(const std::wstring& name = L"Default");
 		virtual ~Shader();
 
-		// GPU¿¡ ½¦ÀÌ´õ °´Ã¼¸¦ ¿¬°á(¹ÙÀÎµù) ÇÏ´Â ÇÔ¼ö
+		// GPUì— ì‰ì´ë” ê°ì²´ë¥¼ ì—°ê²°(ë°”ì¸ë”©) í•˜ëŠ” í•¨ìˆ˜
 		virtual void Bind();
 	protected:
-		// ½¦ÀÌ´õ ÆÄÀÏ ÀÌ¸§
+		// ì‰ì´ë” íŒŒì¼ ì´ë¦„
 		std::wstring name;
 
-		// DX ¸®¼Ò½º
+		// DX ë¦¬ì†ŒìŠ¤
 		ID3D11InputLayout* inputlayout = nullptr;
 
 		ID3D11VertexShader* vertexShader = nullptr;

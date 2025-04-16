@@ -14,8 +14,8 @@ namespace GE
 		ShaderLoader();
 		~ShaderLoader() = default;
 
-		template<typename T, typename... Args, typename std::enable_if<std::is_base_of<Shader, T>::value>::type* = nullptr>
-		bool Load(std::weak_ptr<T>& outShader, Args... args);
+		template<typename T, typename std::enable_if<std::is_base_of<Shader, T>::value>::type* = nullptr>
+		bool Load(std::weak_ptr<T>& outShader);
 
 		static ShaderLoader& Get();
 

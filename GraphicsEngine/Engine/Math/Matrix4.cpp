@@ -1,4 +1,4 @@
-#include "Matrix4.h"
+ï»¿#include "Matrix4.h"
 #include <cmath>
 #include "DirectXMath.h"
 
@@ -8,7 +8,7 @@ namespace GE
 
 	Matrix4::Matrix4()
 	{
-		// ´ÜÀ§ Çà·Ä ¸¸µé±â
+		// ë‹¨ìœ„ í–‰ë ¬ ë§Œë“¤ê¸°
 		memset(elements, 0, sizeof(float) * 4 * 4);
 		m00 = m11 = m22 = m33 = 1.0f;
 	}
@@ -47,14 +47,14 @@ namespace GE
 
 	Matrix4 Matrix4::RotationX(float angle)
 	{
-		// ¹İÈ¯À» À§ÇÑ Çà·Ä º¯¼ö ¼±¾ğ(´ÜÀ§ Çà·Ä).
+		// ë°˜í™˜ì„ ìœ„í•œ í–‰ë ¬ ë³€ìˆ˜ ì„ ì–¸(ë‹¨ìœ„ í–‰ë ¬).
 		Matrix4 m;
 
-		// Çà·Ä °è»êÀ» À§ÇÑ »ï°¢ÇÔ¼ö °ª ÀúÀå.
+		// í–‰ë ¬ ê³„ì‚°ì„ ìœ„í•œ ì‚¼ê°í•¨ìˆ˜ ê°’ ì €ì¥.
 		float cosAngle = std::cos(angle * degreeToRadian);
 		float sinAngle = std::sin(angle * degreeToRadian);
 
-		// Çà·Ä.
+		// í–‰ë ¬.
 		m.m00 = 1.0f;    m.m01 = 0.0f;        m.m02 = 0.0f;        m.m03 = 0.0f;
 		m.m10 = 0.0f;    m.m11 = cosAngle;    m.m12 = sinAngle;    m.m13 = 0.0f;
 		m.m20 = 0.0f;    m.m21 = -sinAngle;   m.m22 = cosAngle;    m.m23 = 0.0f;
@@ -65,14 +65,14 @@ namespace GE
 
 	Matrix4 Matrix4::RotationY(float angle)
 	{
-		// ¹İÈ¯À» À§ÇÑ Çà·Ä º¯¼ö ¼±¾ğ(´ÜÀ§ Çà·Ä).
+		// ë°˜í™˜ì„ ìœ„í•œ í–‰ë ¬ ë³€ìˆ˜ ì„ ì–¸(ë‹¨ìœ„ í–‰ë ¬).
 		Matrix4 m;
 
-		// Çà·Ä °è»êÀ» À§ÇÑ »ï°¢ÇÔ¼ö °ª ÀúÀå.
+		// í–‰ë ¬ ê³„ì‚°ì„ ìœ„í•œ ì‚¼ê°í•¨ìˆ˜ ê°’ ì €ì¥.
 		float cosAngle = std::cos(angle * degreeToRadian);
 		float sinAngle = std::sin(angle * degreeToRadian);
 
-		// Çà·Ä.
+		// í–‰ë ¬.
 		m.m00 = cosAngle;    m.m01 = 0.0f;        m.m02 = -sinAngle;    m.m03 = 0.0f;
 		m.m10 = 0.0f;        m.m11 = 1.0f;        m.m12 = 0.0f;        m.m13 = 0.0f;
 		m.m20 = sinAngle;    m.m21 = 0.0f;        m.m22 = cosAngle;    m.m23 = 0.0f;
@@ -83,14 +83,14 @@ namespace GE
 
 	Matrix4 Matrix4::RotationZ(float angle)
 	{
-		// ¹İÈ¯À» À§ÇÑ Çà·Ä º¯¼ö ¼±¾ğ(´ÜÀ§ Çà·Ä).
+		// ë°˜í™˜ì„ ìœ„í•œ í–‰ë ¬ ë³€ìˆ˜ ì„ ì–¸(ë‹¨ìœ„ í–‰ë ¬).
 		Matrix4 m;
 
-		// Çà·Ä °è»êÀ» À§ÇÑ »ï°¢ÇÔ¼ö °ª ÀúÀå.
+		// í–‰ë ¬ ê³„ì‚°ì„ ìœ„í•œ ì‚¼ê°í•¨ìˆ˜ ê°’ ì €ì¥.
 		float cosAngle = std::cos(angle * degreeToRadian);
 		float sinAngle = std::sin(angle * degreeToRadian);
 
-		// Çà·Ä.
+		// í–‰ë ¬.
 		m.m00 = cosAngle;    m.m01 = sinAngle;    m.m02 = 0.0f;		   m.m03 = 0.0f;
 		m.m10 = -sinAngle;   m.m11 = cosAngle;    m.m12 = 0.0f;        m.m13 = 0.0f;
 		m.m20 = 0.0f;		 m.m21 = 0.0f;        m.m22 = 1.0f;		   m.m23 = 0.0f;
@@ -106,9 +106,9 @@ namespace GE
 
 	Matrix4 Matrix4::Scale(float x, float y, float z)
 	{
-		// ¹İÈ¯À» À§ÇÑ Çà·Ä º¯¼ö ¼±¾ğ.
+		// ë°˜í™˜ì„ ìœ„í•œ í–‰ë ¬ ë³€ìˆ˜ ì„ ì–¸.
 		Matrix4 m;
-		// Çà·Ä.
+		// í–‰ë ¬.
 		m.m00 = x;		m.m01 = 0.0f;	m.m02 = 0.0f;	m.m03 = 0.0f;
 		m.m10 = 0.0f;   m.m11 = y;		m.m12 = 0.0f;   m.m13 = 0.0f;
 		m.m20 = 0.0f;	m.m21 = 0.0f;	m.m22 = z;		m.m23 = 0.0f;
@@ -122,7 +122,7 @@ namespace GE
 		return Scale(scale, scale, scale);
 	}
 
-	// ÀüÄ¡ Çà·Ä
+	// ì „ì¹˜ í–‰ë ¬
 	Matrix4 Matrix4::Transpose(const Matrix4& target)
 	{
 		Matrix4 m = target;
@@ -138,13 +138,13 @@ namespace GE
 
 	Matrix4 Matrix4::Perspective(float fieldOfView, float width, float height, float nearDistance, float farDistance)
 	{
-		// Á¾Çàºñ (È­¸éÀÇ °¡·Î / ¼¼·Î ºñÀ²)
+		// ì¢…í–‰ë¹„ (í™”ë©´ì˜ ê°€ë¡œ / ì„¸ë¡œ ë¹„ìœ¨)
 		float aspect = width / height;
 
-		// ½Ã¾ß°¢ º¯È¯
+		// ì‹œì•¼ê° ë³€í™˜
 		float fov = fieldOfView / 2.0f * degreeToRadian;
 
-		// ÃÊÁ¡ °Å¸® (d)
+		// ì´ˆì  ê±°ë¦¬ (d)
 		float h = 1.0f / std::tanf(fov);
 
 		float w = h / aspect;
@@ -153,9 +153,9 @@ namespace GE
 
 		float b = (-2.0f * nearDistance * farDistance) / (farDistance - nearDistance);
 
-		// Åõ¿µ Çà·Ä Á¶¸³
+		// íˆ¬ì˜ í–‰ë ¬ ì¡°ë¦½
 		Matrix4 m;
-		// Çà·Ä.
+		// í–‰ë ¬.
 		m.m00 = w;		m.m01 = 0.0f;		m.m02 = 0.0f;	m.m03 = 0.0f;
 		m.m10 = 0.0f;   m.m11 = h;			m.m12 = 0.0f;   m.m13 = 0.0f;
 		m.m20 = 0.0f;	m.m21 = 0.0f;		m.m22 = a;		m.m23 = 1.0f;
@@ -172,7 +172,7 @@ namespace GE
 
 	Matrix4 Matrix4::operator*(const Matrix4& other)
 	{
-		// ¹İÈ¯À» À§ÇÑ º¯¼ö ¼±¾ğ.
+		// ë°˜í™˜ì„ ìœ„í•œ ë³€ìˆ˜ ì„ ì–¸.
 		Matrix4 m;
 		m.m00 = m00 * other.m00 + m01 * other.m10 + m02 * other.m20 + m03 * other.m30;
 		m.m01 = m00 * other.m01 + m01 * other.m11 + m02 * other.m21 + m03 * other.m31;
@@ -212,7 +212,7 @@ namespace GE
 	{
 		Vector3 result;
 
-		// ÀÌ°Ç À§Ä¡°ªµµ ³Ö´Â ¹æ½ÄÀÓ
+		// ì´ê±´ ìœ„ì¹˜ê°’ë„ ë„£ëŠ” ë°©ì‹ì„
 		/*
 		result.x = vector.x * matrix.m00 + vector.y * matrix.m10 + vector.z * matrix.m20 + 1.0f * matrix.m30;
 		result.y = vector.x * matrix.m01 + vector.y * matrix.m11 + vector.z * matrix.m21 + 1.0f * matrix.m31;

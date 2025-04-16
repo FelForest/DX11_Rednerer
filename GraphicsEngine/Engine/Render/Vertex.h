@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 
-// ÇöÀç °æ·Î ºÎÅÍ Ã£À½
+// í˜„ì¬ ê²½ë¡œ ë¶€í„° ì°¾ìŒ
 #include "Math/Vector3.h"
 #include "Math/Vector2.h"
 namespace GE
@@ -21,18 +21,18 @@ namespace GE
         static unsigned int Stride() { return sizeof(Vertex); }
 
     public:
-        // Á¤Á¡ÀÇ À§Ä¡
+        // ì •ì ì˜ ìœ„ì¹˜
         Vector3 position;
 
-        // Á¤Á¡ÀÇ »ö»ó
+        // ì •ì ì˜ ìƒ‰ìƒ
         Vector3 color;
 
-        // Á¤Á¡ ±âÁØ ÅØ½ºÃ³ ÁÂÇ¥
+        // ì •ì  ê¸°ì¤€ í…ìŠ¤ì²˜ ì¢Œí‘œ
         Vector2 texCoord;
 
-        // ³ë¸Ö (¹ı¼±, Normal) º¤ÅÍ
+        // ë…¸ë©€ (ë²•ì„ , Normal) ë²¡í„°
         Vector3 normal;
 
-        // Æú¸®°ïÀº 3Á¡ÀÇ Æò±ÕÀ¸·Î ¸¸µå´Â °Ç°¡?
+        // í´ë¦¬ê³¤ì€ 3ì ì˜ í‰ê· ìœ¼ë¡œ ë§Œë“œëŠ” ê±´ê°€?
     };
 }

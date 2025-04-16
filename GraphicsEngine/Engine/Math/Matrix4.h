@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Core/Type.h"
 #include "Vector3.h"
@@ -12,35 +12,35 @@ namespace GE
 		Matrix4(const Matrix4& other);
 		~Matrix4() = default;
 
-		// ¸Ş¸ğ¸® ³Êºñ(´ÜÀ§ : ¹ÙÀÌÆ®).
+		// ë©”ëª¨ë¦¬ ë„ˆë¹„(ë‹¨ìœ„ : ë°”ì´íŠ¸).
 		static uint32 Stride() { return sizeof(Matrix4); }
 
-		// ÀÌµ¿ º¯È¯ Çà·Ä(T)
+		// ì´ë™ ë³€í™˜ í–‰ë ¬(T)
 		static Matrix4 Translation(const Vector3& position);
 		static Matrix4 Translation(float x, float y, float z);
 
-		// È¸Àü º¯È¯ Çà·Ä(R)
+		// íšŒì „ ë³€í™˜ í–‰ë ¬(R)
 		static Matrix4 Rotation(const Vector3& rotation);
 		static Matrix4 Rotation(float x, float y, float z);
 		static Matrix4 RotationX(float angle);
 		static Matrix4 RotationY(float angle);
 		static Matrix4 RotationZ(float angle);
 
-		// Å©±â º¯È¯ Çà·Ä(S)
+		// í¬ê¸° ë³€í™˜ í–‰ë ¬(S)
 		static Matrix4 Scale(const Vector3& scale);
 		static Matrix4 Scale(float x, float y, float z);
 		static Matrix4 Scale(float scale);
 
-		// ÀüÄ¡ Çà·Ä
+		// ì „ì¹˜ í–‰ë ¬
 		static Matrix4 Transpose(const Matrix4& target);
 
-		// ¿ø±ÙÅõ¿µ(Perspective).
+		// ì›ê·¼íˆ¬ì˜(Perspective).
 		static Matrix4 Perspective(
-			float fieldOfView,			// ½Ã¾ß°¢.
-			float width,				// Á¾È¾ºñ¸¦ ±¸ÇÏ±â À§ÇÑ È­¸éÀÇ ³Êºñ.
-			float height,				// Á¾È¾ºñ¸¦ ±¸ÇÏ±â À§ÇÑ È­¸éÀÇ ³ôÀÌ.
-			float nearDistance,			// È­¸é¿¡ ±×·ÁÁú ¼ö ÀÖ´Â °¡Àå °¡±î¿î °Å¸®.
-			float farDistance			// È­¸é¿¡ ±×·ÁÁú ¼ö ÀÖ´Â °¡Àå ¸Õ °Å¸®.
+			float fieldOfView,			// ì‹œì•¼ê°.
+			float width,				// ì¢…íš¡ë¹„ë¥¼ êµ¬í•˜ê¸° ìœ„í•œ í™”ë©´ì˜ ë„ˆë¹„.
+			float height,				// ì¢…íš¡ë¹„ë¥¼ êµ¬í•˜ê¸° ìœ„í•œ í™”ë©´ì˜ ë†’ì´.
+			float nearDistance,			// í™”ë©´ì— ê·¸ë ¤ì§ˆ ìˆ˜ ìˆëŠ” ê°€ì¥ ê°€ê¹Œìš´ ê±°ë¦¬.
+			float farDistance			// í™”ë©´ì— ê·¸ë ¤ì§ˆ ìˆ˜ ìˆëŠ” ê°€ì¥ ë¨¼ ê±°ë¦¬.
 		);
 
 		// operator overloading
@@ -52,24 +52,24 @@ namespace GE
 		friend Vector3 operator*(const Vector3& vector, const Matrix4& matrix);
 
 		// Degree <-> Radian
-		// ¿ø·¡´Â const´Â ¼±¾ğ¸¸ ÇÏ°í ½ÇÁ¦·Î´Â cpp¿¡¼­ ÇØ¾ßÇÔ
+		// ì›ë˜ëŠ” constëŠ” ì„ ì–¸ë§Œ í•˜ê³  ì‹¤ì œë¡œëŠ” cppì—ì„œ í•´ì•¼í•¨
 		static Matrix4 Identity;
 		static constexpr float degreeToRadian = 3.141592f / 180.0f;
 		static constexpr float radianToDegree = 180.0f / 3.141592f;
 	private:
-		// °ø¿ëÃ¼
+		// ê³µìš©ì²´
 		union
 		{
 			struct
 			{
-				// Á÷Á¢ Á¢±Ù¿ë
+				// ì§ì ‘ ì ‘ê·¼ìš©
 				float m00, m01, m02, m03;
 				float m10, m11, m12, m13;
 				float m20, m21, m22, m23;
 				float m30, m31, m32, m33;
 			};
 
-			// memset¿ë
+			// memsetìš©
 			float elements[4 * 4];
 		};
 	};

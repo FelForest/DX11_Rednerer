@@ -1,20 +1,19 @@
 namespace GE
 {
-	template<typename T, typename ...Args, typename std::enable_if<std::is_base_of<Shader, T>::value>::type*>
-	inline bool ShaderLoader::Load(std::weak_ptr<T>& outShader, Args ...args)
+	template<typename T, typename std::enable_if<std::is_base_of<Shader, T>::value>::type*>
+	inline bool ShaderLoader::Load(std::weak_ptr<T>& outShader)
 	{
-		// C++ ±âº» RTTI
+		// ìˆëŠ”ì§€ í™•ì¸ í›„ ì°¾ì•˜ìœ¼ë©´ ë°˜í™˜.
 		auto name = typeid(T).name();
 		auto find = shaders.find(name);
 		if (find != shaders.end())
 		{
-			// ¿ø·¡´Â dynamicÀÌ ¸Â´Âµ¥ ÀÌ°Ç T°¡ ShaderÀÇ ÀÚ¼ÕÀÌ¶ó´Â °ÍÀ» °­Á¦ÇØ¾ßÇÔ
 			outShader = std::static_pointer_cast<T>(find->second);
 			return true;
 		}
 
-		// ¾øÀ¸¸é »ı¼º ÈÄ °ü¸®ÀÚ°¡¿¡ Ãß°¡ÇÏ°í, ¹İÈ¯
-		std::shared_ptr<Shader> newShader = std::make_shared<T>(args...);
+		// ì—†ìœ¼ë©´ ìƒì„± í›„ ê´€ë¦¬ìì— ì¶”ê°€í•˜ê³ , ë°˜í™˜.
+		std::shared_ptr<Shader> newShader = std::make_shared<T>();
 		shaders.insert(std::make_pair(name, newShader));
 		outShader = std::static_pointer_cast<T>(newShader);
 

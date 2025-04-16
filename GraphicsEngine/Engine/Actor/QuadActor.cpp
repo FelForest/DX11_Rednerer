@@ -5,6 +5,8 @@
 #include "Render/SphereMesh.h"
 #include "Shader/TextureMappingShader.h"
 #include "Resource/ShaderLoader.h"
+#include "Resource/TextureLoader.h"
+#include "Render/Texture.h"
 
 namespace GE
 {
@@ -18,9 +20,14 @@ namespace GE
 		meshComponent->SetMesh(std::make_shared<SphereMesh>());
 
 		std::weak_ptr<TextureMappingShader> shader;
-		if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_SuperMario.png"))
+		if (ShaderLoader::Get().Load<TextureMappingShader>(shader))
 		{
 			meshComponent->AddShader(shader);
 		}
+
+		// 텍스처 로드 및 셰이더에 설정
+		std::weak_ptr<Texture> texture;
+		TextureLoader::Get().Load("T_SuperMario.png", texture);
+		shader.lock()->SetTexture(texture);
 	}
 }

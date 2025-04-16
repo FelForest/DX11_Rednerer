@@ -27,8 +27,8 @@ float4 main(PixelInput input) : SV_TARGET
     float nDotL = saturate(dot(worldNormal, -lightDir));
 
     // Half Lambert
-    float dummy = 0.8f;
-    nDotL = pow(nDotL * dummy + (1.0f - dummy), 1.0f);
+    //float dummy = 0.8f;
+    //nDotL = pow(nDotL * dummy + (1.0f - dummy), 1.0f);
     
     //texColor = (1 - texColor);
     float4 finalColor = texColor * nDotL;

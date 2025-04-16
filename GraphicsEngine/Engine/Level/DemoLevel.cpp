@@ -1,6 +1,9 @@
 ﻿#include "DemoLevel.h"
 
 #include "Actor/Actor.h"
+#include "Actor/CameraActor.h"
+#include "Actor/QuadActor.h"
+#include "Actor/QuadActor.h"
 
 #include "Resource/ShaderLoader.h"
 #include "Resource/ModelLoader.h"
@@ -9,7 +12,7 @@
 
 #include "Math/Transform.h"
 #include "Math/Vector3.h"
-#include "Actor/QuadActor.h"
+
 #include "Component/CameraComponent.h"
 
 namespace GE
@@ -23,8 +26,11 @@ namespace GE
 
 
 		// 카메라 액터 생성
-		std::shared_ptr<Actor> cameraActor = std::make_shared<Actor>();
-		cameraActor->AddComponent(std::make_shared<CameraComponent>());
+		/*std::shared_ptr<Actor> cameraActor = std::make_shared<Actor>();
+		cameraActor->AddComponent(std::make_shared<CameraComponent>());*/
+		std::shared_ptr<CameraActor> cameraActor = std::make_shared<CameraActor>();
+		cameraActor->transform.position = Vector3(0, 0, -10.0f);
+		
 		// 엑터를 레벨에 추가
 		AddActor(actor1);
 		AddActor(cameraActor);

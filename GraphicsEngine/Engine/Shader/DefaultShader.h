@@ -1,5 +1,5 @@
-#pragma once
-// ÀÌ°Ô ¸ÓÅÍ¸®¾óÀÓ
+ï»¿#pragma once
+// ì´ê²Œ ë¨¸í„°ë¦¬ì–¼ì„
 #include <string>
 #include <d3d11.h>
 #include "Shader/Shader.h"

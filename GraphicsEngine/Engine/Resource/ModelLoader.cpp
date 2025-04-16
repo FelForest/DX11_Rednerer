@@ -1,4 +1,4 @@
-#include "ModelLoader.h"
+ï»¿#include "ModelLoader.h"
 #include "Core/Common.h"
 #include <vector>
 #include "Math//Vector2.h"
@@ -17,7 +17,7 @@ namespace GE
 
 	bool ModelLoader::Load(const std::string& name, std::weak_ptr<MeshData>& outData)
 	{
-		// ÀÌ¹Ì °¡Áö°í ÀÖ´ÂÁö È®ÀÎ
+		// ì´ë¯¸ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸
 		auto result = meshes.find(name);
 		if (result != meshes.end())
 		{
@@ -25,7 +25,7 @@ namespace GE
 			return true;
 		}
 
-		// ÆÄÀÏ ·Îµå
+		// íŒŒì¼ ë¡œë“œ
 		char path[512] = {};
 		sprintf_s(path, 512, "../Assets/Meshes/%s", name.c_str());
 
@@ -44,7 +44,7 @@ namespace GE
 		std::vector<Vertex> vertices;
 
 
-		// pashing(ÇØ¼®)
+		// pashing(í•´ì„)
 		char line[512] = {};
 		while (!feof(file))
 		{
@@ -53,11 +53,11 @@ namespace GE
 				break;
 			}
 
-			// Çì´õ ÀĞ±â
+			// í—¤ë” ì½ê¸°
 			char header[3] = {};
 			sscanf_s(line, "%s", header, 3);
 
-			// °¢ Å¸ÀÔº°·Î µ¥ÀÌÅÍ ÀúÀå
+			// ê° íƒ€ì…ë³„ë¡œ ë°ì´í„° ì €ì¥
 			if (strcmp(header, "v") == 0)
 			{
 				Vector3 position;
@@ -91,7 +91,7 @@ namespace GE
 
 		}
 
-		// ÆÄÀÏ ´İ±â
+		// íŒŒì¼ ë‹«ê¸°
 		fclose(file);
 
 		// index;
@@ -103,7 +103,7 @@ namespace GE
 			indices.emplace_back(ix);
 		}
 
-		// ¸Ş½Ã µ¥ÀÌÅÍ »ı¼º ¹× ¸®¼Ò½º µî·Ï
+		// ë©”ì‹œ ë°ì´í„° ìƒì„± ë° ë¦¬ì†ŒìŠ¤ ë“±ë¡
 		std::shared_ptr<MeshData> newData = std::make_shared<MeshData>(vertices, indices);
 		std::make_shared<MeshData>(vertices, indices);
 		meshes.insert(std::make_pair(name, newData));
