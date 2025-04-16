@@ -4,7 +4,6 @@ struct VertexInput
     float3 color : COLOR;
     float2 texCoord /*uv*/ : TEXCOORD;
     float3 normal : NORMAL;
-    float3 cameraDirection : TEXCOORD;
 };
 
 cbuffer Transform : register(b0)
@@ -28,7 +27,7 @@ struct VertexOutput
     float3 color : COLOR;
     float2 texCoord /*uv*/ : TEXCOORD;
     float3 normal : NORMAL;
-    float3 cameraDirection : TEXCOORD;
+    float3 cameraDirection : TEXCOORD1;
 };
 
 VertexOutput main(VertexInput input)

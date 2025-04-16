@@ -6,7 +6,7 @@ struct PixelInput
     float3 color : COLOR;
     float2 texCoord /*uv*/ : TEXCOORD;
     float3 normal : NORMAL;
-    float3 cameraDirection : TEXCOORD;
+    float3 cameraDirection : TEXCOORD1;
 };
 
 // Texture
@@ -27,24 +27,42 @@ float4 main(PixelInput input) : SV_TARGET
     float3 worldNormal = normalize(input.normal);
     
     // Dot (Labmert cosine Law)
-    //float nDotL = saturate(dot(worldNormal, -lightDir));
-    float nDotL = CalcLambert(worldNormal, lightDir);
+    //float nDotl = saturate(dot(worldNormal, -lightDir));
+    float nDotl = CalcLambert(worldNormal, lightDir);
     // Half Lambert
     //float dummy = 0.8f;
-    //nDotL = pow(nDotL * dummy + (1.0f - dummy), 1.0f);
-
-    // Phong Shader
-    // PBR에서 specul에서 색상이 묻으면 금속 아니면 비금속
+    //nDotl = pow(nDotl * dummy + (1.0f - dummy), 1.0f);
     
     //texColor = (1 - texColor);
-    float4 finalColor = texColor * nDotL;
     
+
+
+    float4 ambient = texColor * float4(0.1f, 0.1f, 0.1f, 1.0f);
+    float4 diffuse = texColor * nDotl;
+    float4 finalColor = ambient + diffuse;
     
+    // Phong Shader
+    // PBR에서 specul에서 색상이 묻으면 금속 아니면 비금속
+
+    //float specular = CalcPhong(worldNormal, lightDir, input.cameraDirection);
     
-	//return float4(1.0f, 0.0f, 0.0f, 1.0f);
-    //return float4(input.color, 1.0f);
-    //return float4(input.texCoord, 0.0f, 1.0f);
-    //return float4(lightIntensity, lightIntensity, lightIntensity, 1);
+    // Blinn-Phong (specular)
+    float specular = 0;
+    if (nDotl)
+    {
+        // Half Vector
+        float3 viewDirection = normalize(input.cameraDirection);
+        float3 halfVector = normalize((-lightDir) + (-viewDirection));
+
+        // nDoth
+        float nDoth = saturate(dot(worldNormal, halfVector));
+        float shininess = 32.0f;
+        specular = pow(nDoth, shininess);
+    }
+    
+    finalColor += float4(0.4f, 0.6f, 0.8f, 1) * specular;
+
+    
     
     return finalColor;
 

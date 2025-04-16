@@ -19,7 +19,6 @@
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\InputController.cpp" />
-    <ClCompile Include="HLSLShader\Common.hlsli" />
     <ClCompile Include="Level\DemoLevel.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -53,6 +52,7 @@
     <ClInclude Include="Core\InputController.h" />
     <ClInclude Include="Core\Type.h" />
     <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="HLSLShader\Common.hlsli" />
     <ClInclude Include="Level\DemoLevel.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Library\stbi_image.h" />
