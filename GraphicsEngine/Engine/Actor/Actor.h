@@ -27,7 +27,7 @@ namespace GE
 		virtual void Tick(float deltaTime);
 		virtual void Draw();
 
-		void Destory();
+		void Destroy();
 
 		// 컴포넌트 추가함수
 		void AddComponent(std::shared_ptr<class Component> newComponent);

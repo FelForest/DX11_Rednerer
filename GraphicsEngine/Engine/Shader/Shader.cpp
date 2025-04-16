@@ -72,7 +72,7 @@ namespace GE
 				0,
 				DXGI_FORMAT_R32G32B32_FLOAT,
 				0,
-				0,
+				D3D11_APPEND_ALIGNED_ELEMENT, /*0*/
 				D3D11_INPUT_PER_VERTEX_DATA,
 				0
 			},
@@ -93,7 +93,16 @@ namespace GE
 				D3D11_APPEND_ALIGNED_ELEMENT /*24*/,
 				D3D11_INPUT_PER_VERTEX_DATA,
 				0
-			}
+			},
+			{
+				"NORMAL",
+				0,
+				DXGI_FORMAT_R32G32B32_FLOAT,
+				0,
+				D3D11_APPEND_ALIGNED_ELEMENT /*32*/,
+				D3D11_INPUT_PER_VERTEX_DATA,
+				0
+			},
 
 
 		};

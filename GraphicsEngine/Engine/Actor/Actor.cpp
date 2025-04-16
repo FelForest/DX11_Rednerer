@@ -64,7 +64,7 @@ namespace GE
 		}
 	}
 
-	void Actor::Destory()
+	void Actor::Destroy()
 	{
 		hasDestroyed = true;
 	}

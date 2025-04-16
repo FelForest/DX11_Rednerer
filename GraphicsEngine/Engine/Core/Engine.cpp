@@ -251,6 +251,16 @@ namespace GE
 		return *renderer->context;
 	}
 
+	uint32 Engine::Width() const
+	{
+		return window->Width();
+	}
+
+	uint32 Engine::Height() const	
+	{
+		return window->Height();
+	}
+
 	// 게임 최적화 할때 크기 제한해 두는 것도 있음
 	void Engine::OnResize(uint32 width, uint32 height)
 	{

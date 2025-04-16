@@ -11,9 +11,10 @@ namespace GE
         Vertex(
             const Vector3& position, 
             const Vector3& color, 
-            const Vector2& texCoord
+            const Vector2& texCoord,
+            const Vector3& normal
         )
-            : position(position), color(color), texCoord(texCoord)
+            : position(position), color(color), texCoord(texCoord), normal(normal)
         {
         }
 
@@ -28,5 +29,10 @@ namespace GE
 
         // 정점 기준 텍스처 좌표
         Vector2 texCoord;
+
+        // 노멀 (법선, Normal) 벡터
+        Vector3 normal;
+
+        // 폴리곤은 3점의 평균으로 만드는 건가?
     };
 }

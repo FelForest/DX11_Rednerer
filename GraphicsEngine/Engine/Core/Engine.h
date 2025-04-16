@@ -31,6 +31,9 @@ namespace GE
 		ID3D11Device& Device() const;
 		ID3D11DeviceContext& Context() const;
 
+		uint32 Width() const;
+		uint32 Height() const;
+
 		// 화면 크기 변경 이벤트 대응 함수
 		void OnResize(uint32 width, uint32 height);
 

@@ -18,6 +18,11 @@ namespace GE
 		// 행렬 전치.
 		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
 
+		// 투영 행렬 설정
+		data.projectionMatrix = Matrix4::Perspective(60.0f, static_cast<float>(Engine::Get().Width()), static_cast<float>(Engine::Get().Height()), 0.1f, 100.0f);
+
+		data.projectionMatrix = Matrix4::Transpose(data.projectionMatrix);
+
 		// 데이터 담아서 버퍼 생성.
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = sizeof(CameraBuffer);
@@ -73,13 +78,25 @@ namespace GE
 		// 위쪽 이동
 		if (input.IsKey('W') || input.IsKey(VK_UP))
 		{
-			owner->transform.position.y += 1.0f * deltaTime;
+			owner->transform.position.z += 1.0f * deltaTime;
 		}
 
 		// 아래쪽 이동
 		if (input.IsKey('S') || input.IsKey(VK_DOWN))
 		{
+			owner->transform.position.z -= 1.0f * deltaTime;
+		}
+
+		// 위쪽 이동
+		if (input.IsKey('Q'))
+		{
 			owner->transform.position.y -= 1.0f * deltaTime;
+		}
+
+		// 아래쪽 이동
+		if (input.IsKey('E'))
+		{
+			owner->transform.position.y = 1.0f * deltaTime;
 		}
 	}
 
@@ -92,7 +109,14 @@ namespace GE
 			Matrix4::Translation(owner->transform.position * (-1.0f)) *
 			Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
 
-
+		// 투영 행렬 설정
+		data.projectionMatrix = Matrix4::Perspective(
+			60.0f, 
+			static_cast<float>(Engine::Get().Width()), 
+			static_cast<float>(Engine::Get().Height()), 
+			0.1f, 
+			100.0f
+		);
 		//
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
@@ -100,6 +124,7 @@ namespace GE
 		// 행기준 행렬을 열 기준 행렬로 변환하기 위해 전치행렬 처리 -> 이게 GPU가 좋아하는 방식
 
 		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
+		data.projectionMatrix = Matrix4::Transpose(data.projectionMatrix);
 
 		// 버퍼 업데이트
 		D3D11_MAPPED_SUBRESOURCE resource = {};

@@ -2,6 +2,7 @@
 
 #include "Component/StaticMeshComponent.h"
 #include "Render/QuardMesh.h"
+#include "Render/SphereMesh.h"
 #include "Shader/TextureMappingShader.h"
 #include "Resource/ShaderLoader.h"
 
@@ -13,10 +14,11 @@ namespace GE
 		
 		AddComponent(meshComponent);
 
-		meshComponent->SetMesh(std::make_shared<QuardMesh>());
+		//meshComponent->SetMesh(std::make_shared<QuardMesh>());
+		meshComponent->SetMesh(std::make_shared<SphereMesh>());
 
 		std::weak_ptr<TextureMappingShader> shader;
-		if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_coord.png"))
+		if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_SuperMario.png"))
 		{
 			meshComponent->AddShader(shader);
 		}

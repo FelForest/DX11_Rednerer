@@ -11,47 +11,11 @@ namespace GE
 {
 	QuardMesh::QuardMesh()
 	{
-        // 정점 배열.
-        std::vector<Vertex> vertices =
-        {
-            Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(0.0f, 1.0f)),
-            Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(0.0f, 0.0f)),
-            Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(1.0f, 0.0f)),
-            Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(1.0f, 1.0f))
-        };
-
-        // 인덱스 배열.
-        std::vector<uint32> indices = { 1, 2, 3, 3, 0, 1 };
-
-        // 변환 test
-        /*vertices[0].position = vertices[0].position * Matrix4::Scale(0.5f);
-        vertices[1].position = vertices[1].position * Matrix4::Scale(0.5f);
-        vertices[2].position = vertices[2].position * Matrix4::Scale(0.5f);
-        vertices[3].position = vertices[3].position * Matrix4::Scale(0.5f);
-
-        vertices[0].position = vertices[0].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
-        vertices[1].position = vertices[1].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
-        vertices[2].position = vertices[2].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
-        vertices[3].position = vertices[3].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);*/
-
-
-
-        //meshes.emplace_back(std::make_shared<MeshData>(vertices, indices));
         std::weak_ptr<MeshData> mesh;
         if (ModelLoader::Get().Load("quad.obj", mesh))
         {
             meshes.emplace_back(mesh);
         }
-        
-        //shaders.emplace_back(std::make_shared<TextureMappingShader>("SuperMario.png"));
-
-
-
-        /*std::weak_ptr<TextureMappingShader> shader;
-        if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_coord.png"))
-        {
-            shaders.emplace_back(shader);
-        }*/
 	}
 
     void QuardMesh::Update(float deltaTime)
@@ -69,33 +33,33 @@ namespace GE
 
     void QuardMesh::Rotate(float angle)
     {
-        // 정점 배열.
-        std::vector<Vertex> vertices =
-        {
-            Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(0.0f, 1.0f)),
-            Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(0.0f, 0.0f)),
-            Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(1.0f, 0.0f)),
-            Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(1.0f, 1.0f))
-        };
+        //// 정점 배열.
+        //std::vector<Vertex> vertices =
+        //{
+        //    Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(0.0f, 1.0f)),
+        //    Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(0.0f, 0.0f)),
+        //    Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(1.0f, 0.0f)),
+        //    Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector3(1.0f, 0.0f, 1.0f), Vector2(1.0f, 1.0f))
+        //};
 
-        static std::vector<Vertex> result;
-        static bool hasInitialized = false;
+        //static std::vector<Vertex> result;
+        //static bool hasInitialized = false;
 
-        if (!hasInitialized)
-        {
-            hasInitialized = true;
-            result.assign(vertices.begin(), vertices.end());
-        }
+        //if (!hasInitialized)
+        //{
+        //    hasInitialized = true;
+        //    result.assign(vertices.begin(), vertices.end());
+        //}
 
-        // 회전 처리 
-        Matrix4 rotation = Matrix4::RotationZ(angle);
-        result[0].position = vertices[0].position * rotation;
-        result[1].position = vertices[1].position * rotation;
-        result[2].position = vertices[2].position * rotation;
-        result[3].position = vertices[3].position * rotation;
+        //// 회전 처리 
+        //Matrix4 rotation = Matrix4::RotationZ(angle);
+        //result[0].position = vertices[0].position * rotation;
+        //result[1].position = vertices[1].position * rotation;
+        //result[2].position = vertices[2].position * rotation;
+        //result[3].position = vertices[3].position * rotation;
 
-        // 메시의 정점 버퍼 업데이트
-        meshes[0].lock()->UpdateVertexBuffer(result);
+        //// 메시의 정점 버퍼 업데이트
+        //meshes[0].lock()->UpdateVertexBuffer(result);
 
     }
 }

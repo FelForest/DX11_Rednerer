@@ -45,6 +45,8 @@ namespace GE
 		// 버퍼
 		ID3D11RenderTargetView* renderTargetView = nullptr;
 
+		// 뎁스 버퍼 DX에서는 24Bit까지 사용함 Stencil -> 필요한 부분만 그리게 하는거
+ 		ID3D11DepthStencilView* depthStencilView = nullptr;
 		// 뷰포트
 		D3D11_VIEWPORT viewport;
 	};
