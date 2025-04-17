@@ -28,3 +28,21 @@ float CalcPhong(float3 worldNormal, float3 lightDirection, float3 cameraDirectio
 
     return specular;
 }
+
+float CalcBlinnPhone(float3 worldNormal, float3 lightDirection, float3 cameraDirection, float shininess = 32.0f)
+{
+    float NoL = CalcLambert(worldNormal, lightDirection);
+    float specular = 0;
+    if (NoL > 0.0f)
+    {
+        // Half Vector
+        float3 viewDirection = normalize(cameraDirection);
+        float3 halfVector = normalize((-lightDirection) + (-viewDirection));
+
+        // nDoth
+        float NoH = saturate(dot(worldNormal, halfVector));
+        specular = pow(NoH, shininess);
+    }
+
+    return specular;
+}

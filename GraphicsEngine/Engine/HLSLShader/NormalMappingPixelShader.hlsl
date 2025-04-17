@@ -7,24 +7,37 @@ struct PixelInput
     float2 texCoord /*uv*/ : TEXCOORD;
     float3 normal : NORMAL;
     float3 cameraDirection : TEXCOORD1;
+    float3 tangent : TANGENT;
+    float3 bitangent : BITANGENT;
 };
 
 // Texture
 Texture2D diffuseMap : register(t0);
+Texture2D normalMap : register(t1);
+
 SamplerState diffuseSampler : register(s0);
 
 float4 main(PixelInput input) : SV_TARGET
 {
     // Sampling.
     float4 texColor = diffuseMap.Sample(diffuseSampler, input.texCoord);
-    float4 inputColor = float4(input.color, 1);
+    
+    float4 tangentNormal = normalMap.Sample(diffuseSampler, input.texCoord);
+
+    // tangent to world transformation matrix.
+    float3x3 tangentToWorld = float3x3(
+        normalize(input.tangent),
+        normalize(input.normal),
+        normalize(input.normal)
+    );
     
     // Light Dir
     float3 lightDir = -float3(500.0f, 500.0f, -500.0f);
     lightDir = normalize(lightDir);
     
     // World Noraml
-    float3 worldNormal = normalize(input.normal);
+    float3 worldNormal = normalize(mul(tangentNormal.xyz, tangentToWorld));
+    
     
     // Dot (Labmert cosine Law)
     //float nDotl = saturate(dot(worldNormal, -lightDir));

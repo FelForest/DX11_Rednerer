@@ -34,5 +34,12 @@ namespace GE
         Vector3 normal;
 
         // 폴리곤은 3점의 평균으로 만드는 건가?
+
+        // 탄젠트 (tangent) 벡터
+        Vector3 tangent;
+
+        // 바이탄젠트 (bitangent) 벡터
+        Vector3 bitangent;
+
     };
 }
