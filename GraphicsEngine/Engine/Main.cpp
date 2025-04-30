@@ -5,6 +5,12 @@
 
 #include "Level/DemoLevel.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
+
+
 // 메시지 : GUI에서 사용하는 이벤트 처리 방식
 // 창에 관련된 메시지(이벤트)를 처리하는 콜백 함수.
 LRESULT CALLBACK WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam)
@@ -69,6 +75,8 @@ void TestClass()
 }
 int main()
 {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
     //TestClass<Engine>();
     //ThrowIfFailed(E_FAIL, TEXT("Text Error"))
     //Texture texture("T_coord.png");

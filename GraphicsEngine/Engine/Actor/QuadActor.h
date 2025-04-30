@@ -9,5 +9,7 @@ namespace GE
     public:
         QuadActor();
         ~QuadActor() = default;
+
+        virtual void Tick(float deltaTime) override;
     };
 }

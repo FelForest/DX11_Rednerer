@@ -73,12 +73,12 @@ namespace GE
 
 	Vector3 operator+(const Vector3& left, const Vector3& right)
 	{
-		return Vector3(left.x + right.x, left.y + right.y, left.z + left.z);
+		return Vector3(left.x + right.x, left.y + right.y, left.z + right.z);
 	}
 
 	Vector3 operator-(const Vector3& left, const Vector3& right)
 	{
-		return Vector3(left.x - right.x, left.y - right.y, left.z - left.z);
+		return Vector3(left.x - right.x, left.y - right.y, left.z - right.z);
 	}
 
 	Vector3 operator*(const Vector3& vector, float scale)

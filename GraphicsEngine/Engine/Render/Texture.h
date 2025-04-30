@@ -7,18 +7,18 @@
 
 namespace GE
 {
-	// ÅØ½ºÃ³ ÆÄÀÏÀ» ÀÐ¾î¼­ ÀúÀåÇÒ ±¸Á¶Ã¼
+	// ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾î¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
 	struct TextureData
 	{
 		TextureData() = default;
 
 		~TextureData()
 		{
-			// ¿ø½Ã ¸®¼Ò½º ÇØÁ¦
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			free(data);
 			data = nullptr;
 
-			// DX ¸®¼Ò½º ÇØÁ¦
+			// DX ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			if (shaderResourceView)
 			{
 				shaderResourceView->Release();
@@ -27,22 +27,22 @@ namespace GE
 			
 		}
 
-		// ÅØ½ºÃ³ ¿ø½Ã µ¥ÀÌÅÍ
+		// ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int32 width = 0;
 		int32 height = 0;
 		int32 channelCount = 0;
 		void* data = nullptr;
 
-		// DX ¸®¼Ò½º
+		// DX ï¿½ï¿½ï¿½Ò½ï¿½
 		ID3D11ShaderResourceView* shaderResourceView = nullptr;
 		ID3D11SamplerState* samplerState = nullptr;
 
 	};
 
-	// ÅØ½ºÃ³ Å¬·¡½º
+	// ï¿½Ø½ï¿½Ã³ Å¬ï¿½ï¿½ï¿½ï¿½
 	class Texture
 	{
-		// ¹ÙÀÎµùÇÒ ¼ÎÀÌ´õ ¿­°ÅÇü
+		// ï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		enum class BindType
 		{
 			VertexShader,
@@ -55,22 +55,22 @@ namespace GE
 
 		~Texture();
 
-		void Bind();
+		void Bind(uint32 index = 0);
 
 	private:
 		void LoadTexture(const std::string& name);
 
 	private:
-		// ÀÌ¹ÌÁö ÀÌ¸§
+		// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
 		std::string name;
 
-		// ÅØ½ºÃ³ ¼ø¹ø
-		uint32 index = 0u;
+		// ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½
+		//uint32 index = 0u;
 
-		// ¹ÙÀÎµù ¼ÎÀÌ´õ Å¸ÀÔ
+		// ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ Å¸ï¿½ï¿½
 		BindType bindType = BindType::PixelShader;
 
-		// ÅØ½ºÃ³ µ¥ÀÌÅÍ
+		// ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::unique_ptr<TextureData> textureData;
 
 	};

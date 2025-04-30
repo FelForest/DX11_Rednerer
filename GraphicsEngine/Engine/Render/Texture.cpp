@@ -11,7 +11,7 @@ namespace GE
 	}
 
 	Texture::Texture(const std::string& name, BindType bindType, uint32 index)
-		: name(name), bindType(bindType), index(index)
+		: name(name), bindType(bindType)
 	{
         LoadTexture(name);
  	}
@@ -20,7 +20,7 @@ namespace GE
 	{
 	}
 
-    void Texture::Bind()
+    void Texture::Bind(uint32 index)
     {
         // 예외 처리.
         if (!textureData)

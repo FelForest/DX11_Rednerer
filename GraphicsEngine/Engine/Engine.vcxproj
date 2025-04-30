@@ -19,8 +19,18 @@
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\InputController.cpp" />
-    <ClCompile Include="HLSLShader\NormalMappingPixelShader.hlsl" />
-    <ClCompile Include="HLSLShader\NormalMappingVertexShader.hlsl" />
+    <FxCompile Include="HLSLShader\NormalMappingPixelShader.hlsl">
+      <FileType>Document</FileType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="HLSLShader\NormalMappingVertexShader.hlsl">
+      <FileType>Document</FileType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
     <ClCompile Include="Level\DemoLevel.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -39,6 +49,7 @@
     <ClCompile Include="Resource\ShaderLoader.cpp" />
     <ClCompile Include="Resource\TextureLoader.cpp" />
     <ClCompile Include="Shader\DefaultShader.cpp" />
+    <ClCompile Include="Shader\NormalMappingShader.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Shader\TextureMappingShader.cpp" />
   </ItemGroup>
@@ -74,6 +85,7 @@
     <ClInclude Include="Resource\ShaderLoader.h" />
     <ClInclude Include="Resource\TextureLoader.h" />
     <ClInclude Include="Shader\DefaultShader.h" />
+    <ClInclude Include="Shader\NormalMappingShader.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\TextureMappingShader.h" />
   </ItemGroup>
