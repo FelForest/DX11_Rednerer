@@ -33,6 +33,22 @@ namespace GE
 		void AddComponent(std::shared_ptr<class Component> newComponent);
 
 		inline const bool IsActive() const { return isActive && !hasDestroyed; }
+		template<typename T>
+		std::shared_ptr<T> GetComponent()
+		{
+			std::shared_ptr<T> targetComp;
+			for (auto& component : components)
+			{
+				targetComp = std::dynamic_pointer_cast<T>(component);
+				if (targetComp)
+				{
+					return targetComp;
+				}
+			}
+
+			return nullptr;
+		}
+
 		inline const bool HasInitialized() const { return hasDestroyed; }
 
 

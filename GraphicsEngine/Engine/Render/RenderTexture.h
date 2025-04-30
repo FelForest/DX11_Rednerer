@@ -13,11 +13,17 @@ namespace GE
 		RenderTexture(uint32 width = 0, uint32 height = 0);
 		virtual ~RenderTexture();
 
+		// RenderTargetView
 		ID3D11RenderTargetView* GetRenderTarget() const { return renderTargetView; }
 
 		ID3D11RenderTargetView** GetRenderTargetAddress()
 		{
 			return &renderTargetView;
+		}
+
+		ID3D11DepthStencilView* GetDepthStencilView() const
+		{
+			return depthStencilView;
 		}
 	private:
 		ID3D11RenderTargetView* renderTargetView = nullptr;

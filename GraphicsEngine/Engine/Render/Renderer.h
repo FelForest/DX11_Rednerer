@@ -8,6 +8,7 @@
 #include "../Core/Type.h"
 
 
+
 namespace GE
 {
 	class Shader;
@@ -28,6 +29,8 @@ namespace GE
 
 		// 크기 변경 함수
 		void OnResize(uint32 width, uint32 height);
+
+		void EmptyRTVsAndSRVs();
 
 	private:
 

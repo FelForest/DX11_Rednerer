@@ -15,16 +15,24 @@ namespace GE
 		~TextureData()
 		{
 			// ���� ���ҽ� ����
-			free(data);
-			data = nullptr;
-
-			// DX ���ҽ� ����
+			if (data)
+			{
+				free(data);
+				data = nullptr;
+			}
+			
+			// DX 리소스 해제
 			if (shaderResourceView)
 			{
 				shaderResourceView->Release();
 				shaderResourceView = nullptr;
 			}
 			
+			if (samplerState)
+			{
+				samplerState->Release();
+				samplerState = nullptr;
+			}
 		}
 
 		// �ؽ�ó ���� ������
@@ -36,7 +44,6 @@ namespace GE
 		// DX ���ҽ�
 		ID3D11ShaderResourceView* shaderResourceView = nullptr;
 		ID3D11SamplerState* samplerState = nullptr;
-
 	};
 
 	// �ؽ�ó Ŭ����
@@ -53,14 +60,14 @@ namespace GE
 		Texture();
 		Texture(const std::string& name, BindType bindType = BindType::PixelShader, uint32 index = 0u);
 
-		~Texture();
+		virtual ~Texture();
 
 		void Bind(uint32 index = 0);
 
-	private:
+	protected:
 		void LoadTexture(const std::string& name);
 
-	private:
+	protected:
 		// �̹��� �̸�
 		std::string name;
 

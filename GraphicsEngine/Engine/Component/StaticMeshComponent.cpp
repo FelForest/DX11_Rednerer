@@ -54,4 +54,16 @@ namespace GE
 	{
 		shaders.emplace_back(newShader);
 	}
+
+	bool StaticMeshComponent::UseRenderTexture()
+	{
+		for (auto const& shader : shaders)
+		{
+			if (shader.lock() && shader.lock()->UseRenderTexture())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }

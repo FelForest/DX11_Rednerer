@@ -37,7 +37,7 @@ namespace GE
 		// 버퍼(Buffer) - 메모리 덩어리
 		D3D11_BUFFER_DESC indexBufferDesc = { };
 		indexBufferDesc.ByteWidth = sizeof(uint32) * (uint32)indices.size();
-		indexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
 		D3D11_SUBRESOURCE_DATA indexData = { };
 		indexData.pSysMem = indices.data();

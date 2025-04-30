@@ -21,6 +21,8 @@ namespace GE
 
 		// GPU에 쉐이더 객체를 연결(바인딩) 하는 함수
 		virtual void Bind();
+
+		virtual bool UseRenderTexture() const { return useRenderTexture; }
 	protected:
 		// 쉐이더 파일 이름
 		std::wstring name;
@@ -34,6 +36,7 @@ namespace GE
 		ID3D11PixelShader* pixelShader = nullptr;
 		ID3DBlob* pixelShaderBuffer = nullptr;
 
-
+		// 랜더 텍스처 사용 여부
+		bool useRenderTexture = false;
 	};
 }

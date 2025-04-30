@@ -11,6 +11,10 @@
 #include "Level/Level.h"
 #include "Actor/Actor.h"
 
+#include "RenderTexture.h"
+#include "Resource/TextureLoader.h"
+#include "Component/StaticMeshComponent.h"
+
 namespace GE
 {
 	Renderer::Renderer(uint32 width, uint32 height, /*어느창에 그려야 하나*/HWND window)
@@ -235,7 +239,61 @@ namespace GE
 			return;
 		}
 
+		// Pass-1, Phase-1
+		for (int ix = 0; ix < static_cast<int>(TextureLoader::Get().renderTextures.size()); ++ix)
+		{
+			// 렌더 텍스처 가져오기
+			auto renderTexture = TextureLoader::Get().renderTextures[ix];
+
+			EmptyRTVsAndSRVs();
+
+			// 랜더 타겟 설정
+			context->OMSetRenderTargets(1, renderTexture->GetRenderTargetAddress(), renderTexture->GetDepthStencilView());
+
+			float color[] = { 0.5647f, 0.6196f, 0.9529f, 0.0f };
+			context->ClearRenderTargetView(renderTexture->GetRenderTarget(), color);
+			context->ClearDepthStencilView(renderTexture->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+			// 카메라 바인딩
+			if (level->GetCamera())
+			{
+				level->GetCamera()->Draw();
+			}
+
+			// 드로우(Draw) (Draw)
+			for (uint32 actorIndex = 0; actorIndex < level->ActorCount(); ++actorIndex)
+			{
+				// 액터 가져오기
+				auto actor = level->GetActor(actorIndex);
+				
+				// 렌더 텍스처 사용여부 확인
+				auto meshComp = actor->GetComponent<StaticMeshComponent>();
+				if (meshComp && meshComp->UseRenderTexture())
+				{
+					continue;
+				}
+
+				if (actor->IsActive())
+				{
+					// 엔진은 드로우블 컴포넌트들을 다 뜯어와서 사용함
+					//for (const auto& component : actor->components)
+					//{
+					//	// Check if component is drawable
+					//}
+
+
+					actor->Draw();
+				}
+			}
+		}
+		
+
+		// Final-Pass, Final-Phase
 		// 그리기 전 작업 (BeginScene)
+
+		EmptyRTVsAndSRVs();
+
+		
 		// 매번 타겟팅 해줘야함, 하지면 여기는 안바꿈
 		context->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
 		
@@ -360,6 +418,15 @@ namespace GE
 		context->RSSetViewports(1, &viewport);
 		
 		isResizing = false;
+	}
+
+	void Renderer::EmptyRTVsAndSRVs()
+	{
+		static ID3D11RenderTargetView* nullRTV = nullptr;
+		context->OMSetRenderTargets(1, &nullRTV, nullptr);
+
+		static ID3D11ShaderResourceView* nullSRVs[16] = {};
+		context->PSSetShaderResources(0, _countof(nullSRVs), nullSRVs);
 	}
 	
 }
